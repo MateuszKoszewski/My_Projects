@@ -1,0 +1,25 @@
+.title {
+
+  font-size: 30px;
+text-align: center;
+box-sizing: border-box;
+margin: 10px;
+}
+
+.browser {
+  float: left;
+  background-color: bisque;
+  width: 30%;
+}
+.lokalizacja {
+  float: left;
+  width: 30%;
+}
+.roboczy{
+  clear: both;
+}
+.kategorie{
+ margin: 10px;
+ text-align: center;
+ font-size: 30px;
+}

@@ -1,0 +1,25 @@
+<div class="title">
+  Serwis aukcyjny
+</div>
+
+<div style="margin: 20px;">
+  <div>
+    <input type="text" placeholder="wyszukaj" class="browser">
+  </div>
+  <div>
+    <input type="text" placeholder="województwo" class="lokalizacja">
+  </div>
+  <div>
+    <input type="text" placeholder="miasto" class="lokalizacja" [(ngModel)]="text">
+  </div>
+  <div class="roboczy">
+  </div>
+</div>
+
+<div class="kategorie">
+  Kategorie
+</div>
+<span (click)="method()">motoryzacja </span><span> sport </span><span> moda </span>
+<div>
+  {{text}}
+</div>
