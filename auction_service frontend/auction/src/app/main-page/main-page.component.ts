@@ -9,11 +9,10 @@ export class MainPageComponent implements OnInit {
 
   constructor() { }
 
+  localization: String;
+
+
   text: String;
   ngOnInit(): void {
-  }
-  method() {
-
-
   }
 }

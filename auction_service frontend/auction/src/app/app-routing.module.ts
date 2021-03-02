@@ -1,7 +1,24 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AddAuctionComponent } from './add-auction/add-auction.component';
+import { LoggingInComponent } from './logging-in/logging-in.component';
+import { MainPageComponent } from './main-page/main-page.component';
 
-const routes: Routes = [];
+const routes: Routes = [{
+  path: 'logg',
+  component: LoggingInComponent
+}, {
+  path: 'addauction',
+  component: AddAuctionComponent
+}, {
+  path: 'mainpage',
+  component: MainPageComponent
+}, {
+  path: '',
+  redirectTo: '/mainpage',
+  pathMatch: 'full'
+}];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
