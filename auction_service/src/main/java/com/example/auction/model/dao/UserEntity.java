@@ -26,7 +26,7 @@ public class UserEntity {
 
     @JoinColumn
     @OneToOne
-    private AdressEntity adressEntity;
+    private AddressEntity addressEntity;
 
     private LocalDate dateOfCreatingUser;
 

@@ -3,7 +3,7 @@ package com.example.auction.model.dao;
 import javax.persistence.*;
 
 @Entity
-@Table (name = "Rate of transaction")
+@Table (name = "Rate_of_transaction")
 public class RateOfTransactionEntity {
 
     @Id

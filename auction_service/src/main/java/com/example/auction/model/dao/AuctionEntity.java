@@ -1,11 +1,14 @@
 package com.example.auction.model.dao;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 @Table(name = "auctions")
+@Getter
 public class AuctionEntity {
 
     @Id
@@ -30,7 +33,7 @@ public class AuctionEntity {
     private boolean promoted;
 
     @OneToOne
-    private AdressEntity adressEntity;
+    private AddressEntity addressEntity;
 
     private LocalDate dateOfStart;
 

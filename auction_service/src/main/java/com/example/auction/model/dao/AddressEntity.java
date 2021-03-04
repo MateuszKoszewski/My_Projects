@@ -3,8 +3,8 @@ package com.example.auction.model.dao;
 import javax.persistence.*;
 
 @Entity
-@Table (name = "adress")
-public class AdressEntity {
+@Table (name = "address")
+public class AddressEntity {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
