@@ -16,26 +16,31 @@ export class LoggingInComponent implements OnInit {
   isLoginMode = false;
   userEmail: String;
   userPassword: String;
-  loggedIn: boolean = false;
+  loggedIn: boolean = true;
   message: String = ""
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
   }
   onSubmit(form: NgForm) {
-    console.log(form.value);
-    console.log(form);
-    console.log("useremail = " + this.userEmail + " and password: " + this.userPassword)
+    // console.log(form.value);
+    // console.log(form);
+    // console.log("useremail = " + this.userEmail + " and password: " + this.userPassword)
   }
 
   authorize() {
     this.service.getAuth(this.userEmail, this.userPassword).subscribe(data => {
-      console.log(data)
+      this.service.useremail = this.userEmail;
+      this.service.password = this.userPassword;
       if (data === "authenticated succesfully") {
         this.message = "authenticated succesfully"
+        this.loggedIn = true;
+        this.service.loggedIn = true;
       }
     }, error => {
       if (error.status !== 200) {
         this.message = "worng email or password"
+        this.loggedIn = false;
+        this.service.loggedIn = false;
       }
     }
     )

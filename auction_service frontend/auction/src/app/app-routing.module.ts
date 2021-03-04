@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AddAuctionComponent } from './add-auction/add-auction.component';
 import { LoggingInComponent } from './logging-in/logging-in.component';
+import { UserGuardGuard } from './logging-in/user-guard.guard';
 import { MainPageComponent } from './main-page/main-page.component';
 
 const routes: Routes = [{
@@ -9,7 +10,7 @@ const routes: Routes = [{
   component: LoggingInComponent
 }, {
   path: 'addauction',
-  component: AddAuctionComponent
+  component: AddAuctionComponent, canActivate: [UserGuardGuard]
 }, {
   path: 'mainpage',
   component: MainPageComponent
@@ -23,5 +24,6 @@ const routes: Routes = [{
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
+
 })
 export class AppRoutingModule { }
