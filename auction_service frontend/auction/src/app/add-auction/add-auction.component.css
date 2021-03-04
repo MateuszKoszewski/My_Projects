@@ -1,0 +1,12 @@
+.first_div{
+  margin: 20px;
+}
+
+.image{
+  float: left;
+  width:100px;
+  height: 100px;
+  border-color: royalblue;
+  background-color: white;
+  margin: 10px;
+}

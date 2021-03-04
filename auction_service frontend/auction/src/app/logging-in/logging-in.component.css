@@ -24,7 +24,7 @@ label {
   text-shadow: 0 0 1px silver;
   }
   
-#username, #password {
+#email, #password {
   display: block;
   width: 360px; 
   margin: 0 auto;
@@ -65,7 +65,7 @@ label {
   font-size: 11px;
   padding: 5px;
   }
-  #submit {
+  .submit {
   width: 70px;
   padding: 5px 13px;
   border: 1px solid #005f85;
@@ -76,11 +76,16 @@ label {
   left: 90px;
   }
 
-  #submit:hover{
+  .submit:hover{
     color:black;
     background-color: purple;
+    cursor: pointer;
   }
-
+  .submit:disabled{
+  color:white;
+  cursor:not-allowed;
+  background-color: white;
+  }
   #panel, input[type="submit"] {
     -webkit-border-radius: 5px; 
     -moz-border-radius: 5px; 

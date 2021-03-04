@@ -7,6 +7,7 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { FormsModule } from '@angular/forms';
 import { LoggingInComponent } from './logging-in/logging-in.component';
 import { AddAuctionComponent } from './add-auction/add-auction.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { AddAuctionComponent } from './add-auction/add-auction.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

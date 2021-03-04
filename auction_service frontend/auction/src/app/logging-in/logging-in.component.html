@@ -1,12 +1,13 @@
 <div id="panel">
-  <form>
-    <label for="username">Nazwa użytkownika:</label>
-    <input type="text" id="username" name="username">
+  <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
+    <label for="email">email:</label>
+    <input type="text" id="email" [(ngModel)]="userEmail" name="email" required email>
     <label for="password">Hasło:</label>
-    <input type="password" id="password" name="password">
+    <input type="password" id="password" [(ngModel)]="userPassword" name="password" required minlength=6>
     <div id="lower">
-      <input type="submit" value="Login" id="submit">
-      <input type="submit" value="Register" id="submit" style="margin-left: 10%;">
+      <button (click)="authorize()" type="submit" class="submit" [disabled]="authForm.invalid">Login</button>
+      <button type="submit" class="submit" style="margin-left: 10%;">Register</button>
     </div>
   </form>
+  <p>{{message}}</p>
 </div>

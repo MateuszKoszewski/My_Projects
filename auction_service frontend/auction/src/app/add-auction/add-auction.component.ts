@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AddAuctionServiceService } from './add-auction-service.service';
 
 @Component({
   selector: 'app-add-auction',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddAuctionComponent implements OnInit {
 
-  constructor() { }
+  constructor(private service: AddAuctionServiceService) { }
 
   ngOnInit(): void {
   }
-
+  button() {
+    this.service.getAllAuctions().subscribe(auction => console.log(auction));
+  }
 }

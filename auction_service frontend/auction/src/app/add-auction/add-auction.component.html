@@ -1,7 +1,61 @@
-<div class="loggIn">
-  <input>
+<button (click)="button()">button</button>
+<div style="background-color: antiquewhite;">
+  <input type="file">
+  <form #firstForm="ngForm">
+    <div class="first_div">
+      <label>wpisz tytuł</label>
+      <input type="text" minlength="6">
+    </div>
+    <div class="second_div">
+      <label>wybierz kategorię</label>
+      <input type="text">
+    </div>
+    <div class="third_div" style="position: relative; margin: 10px;">
+      <label style="top: 50%; position: absolute;">napisz opis</label>
+      <div>
+        <textarea name="description" rows="3" style="position: relative; left: 100px;"></textarea>
+      </div>
+    </div>
+    <div style="margin:100px">Dodaj zdjęcia
+      <div class="image">
+        <input type="file">
+      </div>
+      <div class="image">
+        <input type="file">
+      </div>
+      <div class="image">
+        <input type="file">
+      </div>
 
+    </div>
+    <div style="clear: both;">
+      <label>wpisz kwotę minimalną</label>
+      <input type="number">
+    </div>
+    <div>
+      <label> wpisz kwotę Kup Teraz</label>
+      <input type="number">
+    </div>
+    <div style="margin: 20px;">
+      <div style="margin: 20px">
+        <label style="margin:10px"> Podaj adres </label>
+      </div>
+      <label> województwo</label>
+      <input type="text">
+    </div>
+    <div>
+      <label>miasto</label>
+      <input type="text">
+    </div>
+    <div>
+      <label>kod pocztowy</label>
+      <input type="number">
+    </div>
+    <div>
+      <label for="wybor2id">Czy ogłoszenie ma być promowane?</label>
+      <input type="checkbox" id="wybor2id" name="promowane">
+    </div>
+    <div>Standardowo aukcja wystawiana jest na okres 2 tygodni z możliwością przedłużenia</div>
+    <button type="submit" style="height: 20px; width: 50px;">submit</button>
+  </form>
 </div>
-
-
-<p>add-auction works!</p>
