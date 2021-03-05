@@ -10,12 +10,16 @@ import { AddAuctionComponent } from './add-auction/add-auction.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptorService } from './logging-in/token-interceptor.service';
 
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
     MainPageComponent,
     LoggingInComponent,
     AddAuctionComponent
+
   ],
   imports: [
     BrowserModule,

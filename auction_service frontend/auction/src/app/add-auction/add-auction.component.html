@@ -1,7 +1,7 @@
 <button (click)="button()">button</button>
 <div style="background-color: antiquewhite;">
   <input type="file">
-  <form #firstForm="ngForm">
+  <form method="post" #firstForm="ngForm">
     <div class="first_div">
       <label>wpisz tytuł</label>
       <input type="text" minlength="6">
@@ -16,9 +16,12 @@
         <textarea name="description" rows="3" style="position: relative; left: 100px;"></textarea>
       </div>
     </div>
-    <div style="margin:100px">Dodaj zdjęcia
+    <div style="margin:50px">Dodaj zdjęcia
       <div class="image">
-        <input type="file">
+        <div style="float: left;" *ngIf="message">{{message}}</div>
+        <input type="file" (change)="selectFile($event)">
+        <img width="100%" height="100%" [src]="url" *ngIf="url">
+
       </div>
       <div class="image">
         <input type="file">

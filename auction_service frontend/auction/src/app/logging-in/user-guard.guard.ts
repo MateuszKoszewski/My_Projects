@@ -13,14 +13,14 @@ export class UserGuardGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
 
-    if (!this.loggingComp.loggedIn) {
-      this.router.navigateByUrl('logg')
-      return false;
-    }
-    else {
-      return true;
-    }
-
+    // if (!this.loggingComp.loggedIn) {
+    //   this.router.navigateByUrl('logg')
+    //   return false;
+    // }
+    // else {
+    //   return true;
+    // }
+    return true;
   }
 
 }
