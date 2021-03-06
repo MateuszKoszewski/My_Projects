@@ -1,0 +1,13 @@
+<p>admin-panel works!</p>
+<button type="button" (click)="getCategoryAddingMenu()">add Category </button>
+<div *ngIf="showCategoryAddingMenu">
+
+  <label for="categoryName">category Name</label>
+  <input type="text" id="categoryName" [(ngModel)]="categoryName" required>
+
+  <label for="description">Description</label>
+
+  <textarea type="text" id="description" [(ngModel)]="description" style="position: absolute;"></textarea>
+  <div><button type="button">add</button></div>
+
+</div>

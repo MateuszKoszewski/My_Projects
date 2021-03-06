@@ -8,7 +8,6 @@ import { Injectable } from '@angular/core';
 export class LoggingService {
 
   constructor(private HttpClient: HttpClient) { }
-  loggedIn: boolean;
   useremail: String;
   password: String;
   encoder: string;

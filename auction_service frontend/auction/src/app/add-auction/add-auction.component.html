@@ -16,20 +16,20 @@
         <textarea name="description" rows="3" style="position: relative; left: 100px;"></textarea>
       </div>
     </div>
+    <button type="button" (click)="shouldDisplaySomething()">display</button>
+    <div *ngIf="displaySomething">tetetetetete</div>
     <div style="margin:50px">Dodaj zdjęcia
-      <div class="image">
+      <!-- <div class="image">
         <div style="float: left;" *ngIf="message">{{message}}</div>
         <input type="file" (change)="selectFile($event)">
         <img width="100%" height="100%" [src]="url" *ngIf="url">
 
-      </div>
-      <div class="image">
-        <input type="file">
-      </div>
-      <div class="image">
-        <input type="file">
-      </div>
-
+      </div> -->
+      <app-display-image (exprotingArray)="import($event)"></app-display-image>
+      <app-display-image (exprotingArray)="import($event)"></app-display-image>
+      <app-display-image (exprotingArray)="import($event)"></app-display-image>
+      <button type="button" (click)="kliknij()">kliknij</button>
+      <p *ngIf="uploadMessage">{{uploadMessage}}</p>
     </div>
     <div style="clear: both;">
       <label>wpisz kwotę minimalną</label>

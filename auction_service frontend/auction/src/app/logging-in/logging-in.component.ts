@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { GlobalService } from '../global.service';
 import { LoggingService } from './logging.service';
 
 @Component({
@@ -9,14 +10,14 @@ import { LoggingService } from './logging.service';
 })
 export class LoggingInComponent implements OnInit {
 
-  constructor(private service: LoggingService) { }
+  constructor(private service: LoggingService, private globalService: GlobalService) { }
 
   ngOnInit(): void {
   }
   isLoginMode = false;
   userEmail: String;
   userPassword: String;
-  loggedIn: boolean = true;
+  // loggedIn: boolean = false;
   message: String = ""
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
@@ -33,14 +34,16 @@ export class LoggingInComponent implements OnInit {
       this.service.password = this.userPassword;
       if (data === "authenticated succesfully") {
         this.message = "authenticated succesfully"
-        this.loggedIn = true;
-        this.service.loggedIn = true;
+        // this.loggedIn = true;
+        this.globalService.loggedIn = true;
+        this.globalService.loggedInUserEmail = this.userEmail
+        this.globalService.loggedInUserPassword = this.userPassword;
       }
     }, error => {
       if (error.status !== 200) {
         this.message = "worng email or password"
-        this.loggedIn = false;
-        this.service.loggedIn = false;
+        // this.loggedIn = false;
+        this.globalService.loggedIn = false;
       }
     }
     )

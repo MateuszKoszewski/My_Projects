@@ -1,1 +1,5 @@
-<p>display-image works!</p>
+<div class="image">
+  <div style="float: left;" *ngIf="message">{{message}}</div>
+  <input type="file" (change)="selectFile($event)">
+  <img width="150px" height="100px" [src]="url" *ngIf="url">
+</div>

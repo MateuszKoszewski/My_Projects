@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 
 import { AddAuctionComponent } from './add-auction.component';
 
@@ -8,9 +9,10 @@ describe('AddAuctionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddAuctionComponent ]
+      declarations: [AddAuctionComponent],
+      imports: [FormsModule]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

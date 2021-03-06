@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-display-image',
@@ -11,5 +12,33 @@ export class DisplayImageComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  message: String;
+  url: any;
+  @Output() exprotingArray = new EventEmitter();
+  selectFile(event: any) {
+
+    if (!event.target.files[0] || event.target.files[0].length == 0) {
+      this.message = 'You must select an image';
+      return;
+    }
+
+    const mimeType = event.target.files[0].type;
+
+    if (mimeType.match(/image\/*/) == null) {
+      this.message = "Only images are supported";
+      this.url = "";
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    reader.onload = (_event) => {
+      this.message = "";
+      this.url = reader.result;
+      this.exprotingArray.emit(event.target.files[0])
+    }
+  }
+
+
 
 }

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AddAuctionComponent } from './add-auction/add-auction.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { LoggingInComponent } from './logging-in/logging-in.component';
 import { UserGuardGuard } from './logging-in/user-guard.guard';
 import { MainPageComponent } from './main-page/main-page.component';
@@ -11,6 +12,9 @@ const routes: Routes = [{
 }, {
   path: 'addauction',
   component: AddAuctionComponent, canActivate: [UserGuardGuard]
+}, {
+  path: 'admin',
+  component: AdminPanelComponent, canActivate: [UserGuardGuard]
 }, {
   path: 'mainpage',
   component: MainPageComponent
