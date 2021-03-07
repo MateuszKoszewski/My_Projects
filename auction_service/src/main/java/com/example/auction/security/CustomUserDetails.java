@@ -21,7 +21,7 @@ public class CustomUserDetails implements UserDetailsService {
     @Transactional
 
     public UserDetails loadUserByUsername(String emailAdress) throws UsernameNotFoundException {
-        UserEntity userEntity = usersRepository.findByEmailAdress(emailAdress).orElseThrow(()-> new RuntimeException("cant find email"));
+        UserEntity userEntity = usersRepository.findByEmailAddress(emailAdress).orElseThrow(()-> new RuntimeException("cant find email"));
         return User.builder().username(emailAdress)
                 .password(userEntity.getPassword())
                 .authorities(userEntity.getAuthorityEntity().getAuthority())

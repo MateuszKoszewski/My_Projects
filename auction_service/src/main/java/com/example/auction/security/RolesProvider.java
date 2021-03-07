@@ -46,11 +46,11 @@ public class RolesProvider implements CommandLineRunner {
             userRole = authorityEntity.get();
         }
 
-        Optional<UserEntity> userEntity = usersRepository.findByEmailAdress(userEmail);
+        Optional<UserEntity> userEntity = usersRepository.findByEmailAddress(userEmail);
         UserEntity adminEntity;
         if (userEntity.isEmpty()) {
             adminEntity = new UserEntity();
-            adminEntity.setEmailAdress(userEmail);
+            adminEntity.setEmailAddress(userEmail);
             adminEntity.setPassword(password);
             adminEntity.setAuthorityEntity(userRole);
 

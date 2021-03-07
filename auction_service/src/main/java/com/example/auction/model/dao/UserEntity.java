@@ -1,5 +1,6 @@
 package com.example.auction.model.dao;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,15 +9,14 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "users")
-@Getter
-@Setter
+@Data
 public class UserEntity {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer Id;
 
-    private String emailAdress;
+    private String emailAddress;
 
     private String password;
 
@@ -25,7 +25,7 @@ public class UserEntity {
     private String lastName;
 
     @JoinColumn
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     private AddressEntity addressEntity;
 
     private LocalDate dateOfCreatingUser;

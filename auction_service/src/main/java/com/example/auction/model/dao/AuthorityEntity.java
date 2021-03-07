@@ -17,6 +17,4 @@ public class AuthorityEntity {
 
     private String authority;
 
-    @OneToOne
-    private UserEntity userEntity;
 }

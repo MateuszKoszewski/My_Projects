@@ -1,7 +1,11 @@
 package com.example.auction.model.dao;
 
+import lombok.Data;
+import lombok.Getter;
+
 import javax.persistence.*;
 
+@Data
 @Entity
 @Table (name = "address")
 public class AddressEntity {
@@ -14,6 +18,12 @@ public class AddressEntity {
 
     private String city;
 
-    private String adress;
+    private String street;
+
+    private int numberOfHouse;
+
+    private int numberOfFlat;
+
+    private String postCode;
 
 }
