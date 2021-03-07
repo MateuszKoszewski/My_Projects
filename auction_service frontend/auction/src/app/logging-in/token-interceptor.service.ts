@@ -13,7 +13,7 @@ export class TokenInterceptorService {
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     let loggingService = this.injector.get(LoggingService);
     let tokenizedReq = null;
-    console.log(loggingService.encoder)
+    // console.log(loggingService.encoder)
     if (loggingService.encoder != null) {
       tokenizedReq = req.clone({
         headers: req.headers.set('Authorization', loggingService.encoder)

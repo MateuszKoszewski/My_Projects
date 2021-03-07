@@ -15,4 +15,5 @@ export class AddAuctionServiceService {
   uploadImages(uploadImageData: FormData) {
     return this.http.post('http://localhost:8080/image/upload', uploadImageData, { observe: 'response' })
   }
+
 }

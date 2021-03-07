@@ -1,18 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MainPageComponent } from './main-page.component';
 import { FormsModule } from '@angular/forms';
-import { MainPageService } from './main-page.service';
+import { AdminPanelComponent } from './admin-panel.component';
+import { AdminPanelService } from './admin-panel.service';
 import { HttpClientModule } from '@angular/common/http';
 
 
 
 @NgModule({
-  declarations: [MainPageComponent],
+  declarations: [AdminPanelComponent],
   imports: [
     CommonModule, FormsModule, HttpClientModule
   ],
-  exports: [],
-  providers: [MainPageService]
+  providers: [AdminPanelService]
 })
-export class MainPageModule { }
+export class AdminPanelModule { }

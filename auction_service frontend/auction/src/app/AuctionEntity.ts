@@ -1,3 +1,7 @@
+import { AddressEntity } from "./AddressEntity";
+import { UserEntity } from "./UserEntity";
+
+
 export class AuctionEntity {
 
   private title: String;
@@ -5,11 +9,10 @@ export class AuctionEntity {
   private description: String;
   private minPrice: number;
   private buyNowPrice: number;
-  private county: String;
-  private city: String;
-  private postCode: number;
+  private address: AddressEntity;
   private promoted: boolean;
   private images: [];
+  private user: UserEntity
 
 
 }

@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -7,7 +8,7 @@ import { Injectable } from '@angular/core';
 })
 export class LoggingService {
 
-  constructor(private HttpClient: HttpClient) { }
+  constructor(private HttpClient: HttpClient, private router: Router) { }
   useremail: String;
   password: String;
   encoder: string;
@@ -15,13 +16,16 @@ export class LoggingService {
     const headers = new HttpHeaders({
       Authorization: 'Basic ' + btoa(useremail + ":" + userPassword)
     })
-    console.log(headers)
+    // console.log(headers)
     this.encoder = headers.get('Authorization')
     return this.HttpClient.get("http://localhost:8080/log", { headers, responseType: 'text' as 'json' })
   }
 
   getToken() {
     return localStorage.getItem('token');
+  }
+  moveToRegister() {
+    this.router.navigateByUrl('register');
   }
 
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { GlobalService } from '../global.service';
 import { LoggingService } from './logging.service';
 
@@ -10,7 +11,7 @@ import { LoggingService } from './logging.service';
 })
 export class LoggingInComponent implements OnInit {
 
-  constructor(private service: LoggingService, private globalService: GlobalService) { }
+  constructor(private service: LoggingService, private globalService: GlobalService, private routing: Router) { }
 
   ngOnInit(): void {
   }
@@ -38,6 +39,7 @@ export class LoggingInComponent implements OnInit {
         this.globalService.loggedIn = true;
         this.globalService.loggedInUserEmail = this.userEmail
         this.globalService.loggedInUserPassword = this.userPassword;
+        // this.routing.navigateByUrl('addauction')
       }
     }, error => {
       if (error.status !== 200) {
@@ -48,6 +50,9 @@ export class LoggingInComponent implements OnInit {
     }
     )
 
+  }
+  moveToRegister() {
+    this.service.moveToRegister()
   }
 
 

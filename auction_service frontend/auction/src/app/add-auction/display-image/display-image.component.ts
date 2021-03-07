@@ -16,7 +16,7 @@ export class DisplayImageComponent implements OnInit {
   url: any;
   @Output() exprotingArray = new EventEmitter();
   selectFile(event: any) {
-
+    console.log(event)
     if (!event.target.files[0] || event.target.files[0].length == 0) {
       this.message = 'You must select an image';
       return;
@@ -35,7 +35,12 @@ export class DisplayImageComponent implements OnInit {
     reader.onload = (_event) => {
       this.message = "";
       this.url = reader.result;
+      // if (event.target.files === undefined) {
+      //   this.exprotingArray.emit(null);
+      // }
+
       this.exprotingArray.emit(event.target.files[0])
+
     }
   }
 

@@ -1,18 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MainPageComponent } from './main-page.component';
+import { UserRegisterComponent } from './user-register.component';
 import { FormsModule } from '@angular/forms';
-import { MainPageService } from './main-page.service';
+import { UserRegisterService } from './user-register.service';
 import { HttpClientModule } from '@angular/common/http';
 
 
 
 @NgModule({
-  declarations: [MainPageComponent],
+  declarations: [UserRegisterComponent],
   imports: [
     CommonModule, FormsModule, HttpClientModule
   ],
-  exports: [],
-  providers: [MainPageService]
+  providers: [UserRegisterService]
 })
-export class MainPageModule { }
+export class UserRegisterModule { }

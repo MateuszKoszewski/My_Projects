@@ -5,6 +5,7 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { LoggingInComponent } from './logging-in/logging-in.component';
 import { UserGuardGuard } from './logging-in/user-guard.guard';
 import { MainPageComponent } from './main-page/main-page.component';
+import { UserRegisterComponent } from './user-register/user-register.component';
 
 const routes: Routes = [{
   path: 'logg',
@@ -15,7 +16,12 @@ const routes: Routes = [{
 }, {
   path: 'admin',
   component: AdminPanelComponent, canActivate: [UserGuardGuard]
-}, {
+},
+{
+  path: 'register',
+  component: UserRegisterComponent
+},
+{
   path: 'mainpage',
   component: MainPageComponent
 }, {

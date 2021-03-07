@@ -8,8 +8,9 @@ import { TokenInterceptorService } from './logging-in/token-interceptor.service'
 import { MainPageModule } from './main-page/main-page.module';
 import { LoggingInModule } from './logging-in/logging-in.module';
 import { AddAuctionModule } from './add-auction/add-auction.module';
-import { AdminPanelComponent } from './admin-panel/admin-panel.component';
-
+import { AdminPanelModule } from './admin-panel/admin-panel.module';
+import { UserRegisterComponent } from './user-register/user-register.component';
+import { UserRegisterModule } from './user-register/user-register.module';
 
 
 
@@ -18,8 +19,7 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    AdminPanelComponent
+    AppComponent
 
   ],
   imports: [
@@ -29,7 +29,9 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
     HttpClientModule,
     MainPageModule,
     LoggingInModule,
-    AddAuctionModule
+    AddAuctionModule,
+    UserRegisterModule,
+    AdminPanelModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

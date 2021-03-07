@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GlobalService } from '../global.service';
 import { AddAuctionServiceService } from './add-auction-service.service';
 
 @Component({
@@ -8,15 +9,15 @@ import { AddAuctionServiceService } from './add-auction-service.service';
 })
 export class AddAuctionComponent implements OnInit {
 
-  constructor(private service: AddAuctionServiceService) { }
+  constructor(private service: AddAuctionServiceService, private globalService: GlobalService) { }
 
   message: String;
   shouldDisplayMessage: boolean = false;
   url: any;
   array = [];
-  uploadMessage: String[];
+  uploadMessage = "";
   displaySomething: boolean = false;
-
+  arrayRoboczy = [];
   ngOnInit(): void {
   }
 
@@ -27,35 +28,19 @@ export class AddAuctionComponent implements OnInit {
   button() {
     this.service.getAllAuctions().subscribe(auction => console.log(auction));
   }
+
+
   import(odebranaZmienna: any) {
-    // console.log(odebranaZmienna);
+    // console.log(odebranaZmienna)
+    if (odebranaZmienna === undefined) {
+      this.array.push(null)
+    }
     this.array.push(odebranaZmienna);
+    // console.log(this.array)
   }
-  selectFile(event: any) {
-    // console.log(this.array);
-    if (!event.target.files[0] || event.target.files[0].length == 0) {
-      this.message = 'You must select an image';
-      return;
-    }
 
-    const mimeType = event.target.files[0].type;
-
-    if (mimeType.match(/image\/*/) == null) {
-      this.message = "Only images are supported";
-      this.url = "";
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.readAsDataURL(event.target.files[0]);
-
-    reader.onload = (_event) => {
-      this.message = "";
-      this.url = reader.result;
-    }
-  }
   kliknij() {
-    console.log(this.array)
+    // console.log(this.array)
     this.uploadImages();
 
   }
@@ -67,14 +52,23 @@ export class AddAuctionComponent implements OnInit {
       let newFile: File = this.array[i];
       uploadImageData.append('imageFile', newFile, newFile.name);
       this.service.uploadImages(uploadImageData).subscribe((response) => {
+        console.log(response.status)
         if (response.status === 200) {
-          this.uploadMessage[i] = 'Image uploaded successfully';
+          this.uploadMessage = 'Image uploaded successfully';
         } else {
-          this.uploadMessage[i] = 'Image not uploaded successfully';
+          this.uploadMessage = 'Image not uploaded successfully';
         }
+        // console.log(this.uploadMessage)
       })
     }
+    // console.log(this.array)
+    // this.arrayRoboczy[0] = 5;
+    // this.arrayRoboczy.push(null);
+    // this.arrayRoboczy[2] = 6;
+    // console.log(this.arrayRoboczy);
+
   }
+
 
 
 

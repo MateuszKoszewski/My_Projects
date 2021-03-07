@@ -6,7 +6,7 @@
     <input type="password" id="password" [(ngModel)]="userPassword" name="password" required minlength=6>
     <div id="lower">
       <button (click)="authorize()" type="submit" class="submit" [disabled]="authForm.invalid">Login</button>
-      <button type="submit" class="submit" style="margin-left: 10%;">Register</button>
+      <button (click)="moveToRegister()" type="submit" class="submit" style="margin-left: 10%;">Register</button>
     </div>
   </form>
   <p>{{message}}</p>

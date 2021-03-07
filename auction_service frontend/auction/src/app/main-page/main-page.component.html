@@ -17,9 +17,10 @@
 </div>
 
 <div class="kategorie">
-  Kategorie
+  <div>Kategorie</div>
+  <!-- <button (click)="click()">button</button> -->
+  <span *ngFor="let cat of arrayOfCategories"> {{cat}} </span>
 </div>
-<span>motoryzacja </span><span> sport </span><span> moda </span>
 <div class="promotion">
   Ogłoszenie promowane w {{localization}}
 </div>
