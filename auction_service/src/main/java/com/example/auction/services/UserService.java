@@ -3,6 +3,7 @@ package com.example.auction.services;
 import com.example.auction.model.dao.AddressEntity;
 import com.example.auction.model.dao.AuthorityEntity;
 import com.example.auction.model.dao.UserEntity;
+import com.example.auction.model.dto.GetUserResponse;
 import com.example.auction.model.dto.RegisterUserRequest;
 import com.example.auction.model.dto.RegisterUserResponse;
 import com.example.auction.model.exceptions.AppErrorMessage;
@@ -10,6 +11,7 @@ import com.example.auction.model.exceptions.AppException;
 import com.example.auction.repositories.AuthoritiesRepository;
 import com.example.auction.repositories.UsersRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,8 +28,7 @@ public class UserService {
 
 
     public RegisterUserResponse registerUser(RegisterUserRequest registerUserRequest) {
-        Optional<UserEntity> foundedUser = usersRepository.findByEmailAddress(
-                registerUserRequest.getEmailAddress());
+        Optional<UserEntity> foundedUser = usersRepository.findByEmailAddress(registerUserRequest.getEmailAddress());
         if (foundedUser.isPresent()) {
             throw new AppException(AppErrorMessage.USER_ALREADY_EXISTS, registerUserRequest.getEmailAddress());
         } else {
@@ -50,5 +51,10 @@ public class UserService {
             usersRepository.save(user);
         }
         return RegisterUserResponse.builder().emailAddress(registerUserRequest.getEmailAddress()).message("user registered").build();
+    }
+    public GetUserResponse getUser (String userEmail){
+        UserEntity foundedUser = usersRepository.findByEmailAddress(userEmail).orElseThrow(()->new AppException(AppErrorMessage.USER_DOES_NOT_EXISTS, userEmail));
+        ModelMapper mapper = new ModelMapper();
+        return mapper.map(foundedUser, GetUserResponse.class);
     }
 }

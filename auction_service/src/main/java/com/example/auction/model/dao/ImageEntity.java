@@ -1,17 +1,20 @@
 package com.example.auction.model.dao;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
 @Entity
+@Data
 @Table(name = "pictures")
-public class PictureEntity {
+public class ImageEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Id;
+    private Long Id;
 
     private String path;
 
-    @ManyToOne
-    private AuctionEntity auctionEntity;
+    private boolean main;
+
 }

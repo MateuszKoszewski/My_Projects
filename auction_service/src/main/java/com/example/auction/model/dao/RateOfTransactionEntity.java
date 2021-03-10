@@ -8,7 +8,7 @@ public class RateOfTransactionEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @OneToOne
     private PurchaseEntity purchaseEntity;

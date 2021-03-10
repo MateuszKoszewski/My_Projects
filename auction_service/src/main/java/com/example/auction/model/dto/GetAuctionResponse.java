@@ -1,6 +1,6 @@
 package com.example.auction.model.dto;
 
-import com.example.auction.model.dao.PictureEntity;
+import com.example.auction.model.dao.ImageEntity;
 import lombok.Builder;
 
 import java.util.List;
@@ -12,5 +12,5 @@ public class GetAuctionResponse {
 
     private String description;
 
-    private List<PictureEntity> pictures;
+    private List<ImageEntity> pictures;
 }

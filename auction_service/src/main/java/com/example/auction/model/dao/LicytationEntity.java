@@ -9,7 +9,7 @@ import javax.persistence.Table;
 public class LicytationEntity {
 
     @Id
-    private Integer id;
+    private Long id;
 
 
 }

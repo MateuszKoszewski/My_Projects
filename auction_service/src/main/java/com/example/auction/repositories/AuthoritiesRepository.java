@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface AuthoritiesRepository extends JpaRepository<AuthorityEntity, Integer> {
+public interface AuthoritiesRepository extends JpaRepository<AuthorityEntity, Long> {
 
     Optional<AuthorityEntity> findAuthorityEntityByAuthority(String authority);
 }

@@ -1,29 +1,18 @@
 package com.example.auction.model.dao;
 
 import lombok.Data;
-import lombok.Getter;
 
 import javax.persistence.*;
 
-@Data
 @Entity
-@Table (name = "address")
-public class AddressEntity {
+@Data
+@Table(name="Localization_of_auctions")
+public class LocalizationEntity {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long Id;
-
+    private Long id;
     private String county;
-
     private String city;
-
-    private String street;
-
-    private int numberOfHouse;
-
-    private int numberOfFlat;
-
     private String postCode;
-
 }

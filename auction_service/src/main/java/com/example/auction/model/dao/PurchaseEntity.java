@@ -9,7 +9,7 @@ public class PurchaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Id;
+    private Long Id;
 
     @ManyToOne
     private UserEntity userEntity;
