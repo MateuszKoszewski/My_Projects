@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { DisplayImageComponent } from './display-image/display-image.component';
 import { AddAuctionServiceService } from './add-auction-service.service';
 import { HttpClientModule } from '@angular/common/http';
+import { MainPageService } from '../main-page/main-page.service';
 
 
 
@@ -14,6 +15,6 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     CommonModule, FormsModule, HttpClientModule
   ],
-  providers: [AddAuctionServiceService]
+  providers: [AddAuctionServiceService, MainPageService]
 })
 export class AddAuctionModule { }

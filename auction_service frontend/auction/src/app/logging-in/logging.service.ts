@@ -21,9 +21,6 @@ export class LoggingService {
     return this.HttpClient.get("http://localhost:8080/log", { headers, responseType: 'text' as 'json' })
   }
 
-  getToken() {
-    return localStorage.getItem('token');
-  }
   moveToRegister() {
     this.router.navigateByUrl('register');
   }

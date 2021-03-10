@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { UserEntity } from '../UserEntity';
+import { AuctionEntity } from '../AuctionEntity';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +17,12 @@ export class AddAuctionServiceService {
   }
   uploadImages(uploadImageData: FormData) {
     return this.http.post('http://localhost:8080/image/upload', uploadImageData, { observe: 'response' })
+  }
+  getUser(emailAddress: String): Observable<UserEntity> {
+    return this.http.get<UserEntity>('http://localhost:8080/user/' + emailAddress)
+  }
+  addAuction(uploadImageData: FormData) {
+    return this.http.post('http://localhost:8080/auction', uploadImageData, { observe: 'response' });
   }
 
 }

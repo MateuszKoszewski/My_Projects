@@ -1,5 +1,6 @@
-import { AddressEntity } from "./AddressEntity";
-import { UserEntity } from "./UserEntity";
+
+import { LocalizationEntity } from "./LocalizationEntity";
+
 
 
 export class AuctionEntity {
@@ -9,10 +10,22 @@ export class AuctionEntity {
   private description: String;
   private minPrice: number;
   private buyNowPrice: number;
-  private address: AddressEntity;
+  private address: LocalizationEntity;
   private promoted: boolean;
-  private images: [];
-  private user: UserEntity
+  private images: String[];
+  private emailAddress: String;
 
 
+  constructor(title: String, category: String, description: String, minPrice: number, buyNowPrice: number, address: LocalizationEntity, promoted: boolean, images: String[], emailAddress: String) {
+    this.title = title;
+    this.category = category;
+    this.description = description;
+    this.minPrice = minPrice;
+    this.buyNowPrice = buyNowPrice;
+    this.address = address;
+    this.promoted = promoted;
+    this.images = images;
+    this.emailAddress = emailAddress
+
+  }
 }

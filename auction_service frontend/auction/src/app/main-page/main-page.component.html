@@ -19,7 +19,9 @@
 <div class="kategorie">
   <div>Kategorie</div>
   <!-- <button (click)="click()">button</button> -->
-  <span *ngFor="let cat of arrayOfCategories"> {{cat}} </span>
+  <span #spanRef *ngFor="let cat of arrayOfCategories; let i=index" [attr.data-index]="i" (click)="click(spanRef)"
+    class="category">
+    {{cat}} </span>
 </div>
 <div class="promotion">
   Ogłoszenie promowane w {{localization}}

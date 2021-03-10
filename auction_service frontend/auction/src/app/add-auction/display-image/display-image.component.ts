@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+
+import { Component, OnInit, Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 
 @Component({
@@ -10,13 +11,18 @@ export class DisplayImageComponent implements OnInit {
 
   constructor() { }
 
+  // changed: boolean = false;
+  array = [];
+
   ngOnInit(): void {
   }
   message: String;
   url: any;
   @Output() exprotingArray = new EventEmitter();
+  @Output() changeValue = new EventEmitter();
   selectFile(event: any) {
-    console.log(event)
+    // this.changed = true;
+    // console.log(event)
     if (!event.target.files[0] || event.target.files[0].length == 0) {
       this.message = 'You must select an image';
       return;
@@ -38,12 +44,13 @@ export class DisplayImageComponent implements OnInit {
       // if (event.target.files === undefined) {
       //   this.exprotingArray.emit(null);
       // }
-
-      this.exprotingArray.emit(event.target.files[0])
-
+      this.array = [event.target.files[0]]
+      this.exprotingArray.emit(this.array)
+      // this.emitChange();
     }
   }
-
-
+  // emitChange() {
+  //   this.changeValue.emit(this.changed)
+  // }
 
 }

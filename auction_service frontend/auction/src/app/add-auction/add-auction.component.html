@@ -2,65 +2,63 @@
 
 <div style="background-color: antiquewhite;">
   <input type="file">
-  <form method="post" #firstForm="ngForm">
+  <form #firstForm="ngForm" (ngSubmit)="onSubmit(firstForm)">
     <div class="first_div">
-      <label>wpisz tytuł</label>
-      <input type="text" minlength="6">
+      <label for="title">wpisz tytuł</label>
+      <input type="text" minlength="6" id="title" name="title" ngModel required>
     </div>
     <div class="second_div">
-      <label>wybierz kategorię</label>
-      <input type="text">
+      <label for="category">wybierz kategorię</label>
+      <select id="category" name="category" ngModel>
+        <option *ngFor="let cat of optionsArray">{{cat}}</option>
+      </select>
     </div>
     <div class="third_div" style="position: relative; margin: 10px;">
       <label style="top: 50%; position: absolute;">napisz opis</label>
       <div>
-        <textarea name="description" rows="3" style="position: relative; left: 100px;"></textarea>
+        <textarea name="description" rows="3" style="position: relative; left: 100px;" ngModel></textarea>
       </div>
     </div>
     <button type="button" (click)="shouldDisplaySomething()">display</button>
     <div *ngIf="displaySomething">tetetetetete</div>
     <div style="margin:50px">Dodaj zdjęcia
-      <!-- <div class="image">
-        <div style="float: left;" *ngIf="message">{{message}}</div>
-        <input type="file" (change)="selectFile($event)">
-        <img width="100%" height="100%" [src]="url" *ngIf="url">
 
-      </div> -->
-      <app-display-image (exprotingArray)="import($event)"></app-display-image>
-      <!-- <p *ngIf="" >image uploaded succesfully</p> -->
-      <app-display-image (exprotingArray)="import($event)"></app-display-image>
-      <app-display-image (exprotingArray)="import($event)"></app-display-image>
+      <div #el *ngFor="let qwe of howManyImages; let i=index" [attr.data-index]="i">
+        <app-display-image (exprotingArray)="import($event, el)">
+        </app-display-image>
+      </div>
+
       <button type="button" (click)="kliknij()">kliknij</button>
       <p *ngIf="uploadMessage">{{uploadMessage}}</p>
     </div>
     <div style="clear: both;">
-      <label>wpisz kwotę minimalną</label>
-      <input type="number">
+      <label for="minPrice">wpisz kwotę minimalną</label>
+      <input type="number" id="minPrice" name="minPrice" ngModel>
     </div>
     <div>
-      <label> wpisz kwotę Kup Teraz</label>
-      <input type="number">
+      <label for="buyNowPrice"> wpisz kwotę Kup Teraz</label>
+      <input type="number" id="buyNowPrice" name="buyNowPrice" ngModel>
     </div>
     <div style="margin: 20px;">
       <div style="margin: 20px">
         <label style="margin:10px"> Podaj adres </label>
       </div>
-      <label> województwo</label>
-      <input type="text">
+      <label for="county"> województwo</label>
+      <input type="text" name="county" id="county" ngModel [(ngModel)]="county">
     </div>
     <div>
-      <label>miasto</label>
-      <input type="text">
+      <label for="city">miasto</label>
+      <input type="text" name="city" id="city" ngModel [(ngModel)]="city">
     </div>
     <div>
-      <label>kod pocztowy</label>
-      <input type="number">
+      <label for="postCode">kod pocztowy</label>
+      <input type="text" name="postCode" id="postCode" [(ngModel)]="postCode">
     </div>
     <div>
       <label for="wybor2id">Czy ogłoszenie ma być promowane?</label>
-      <input type="checkbox" id="wybor2id" name="promowane">
+      <input type="checkbox" id="wybor2id" name="promoted" ngModel>
     </div>
     <div>Standardowo aukcja wystawiana jest na okres 2 tygodni z możliwością przedłużenia</div>
-    <button type="submit" style="height: 20px; width: 50px;">submit</button>
+    <button type="submit" style="height: 20px; width: 50px;">Dodaj ogłoszenie</button>
   </form>
 </div>

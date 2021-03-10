@@ -2,11 +2,11 @@ import { AddressEntity } from './AddressEntity';
 
 export class UserEntity {
 
-  private emailAddress: String;
+  emailAddress: String;
   private password: String;
   private name: String;
   private lastName: String;
-  private address: AddressEntity;
+  address: AddressEntity;
 
   constructor(emailAddress: String, password: String, name: String, lastName: String, address: AddressEntity) {
     this.emailAddress = emailAddress;

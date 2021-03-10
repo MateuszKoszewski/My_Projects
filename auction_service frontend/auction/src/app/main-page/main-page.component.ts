@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { CategoryEntity } from '../CategoryEntity';
+
 import { MainPageService } from './main-page.service';
 
 @Component({
@@ -24,11 +23,11 @@ export class MainPageComponent implements OnInit {
       console.log(this.arrayOfCategories)
     })
   }
-  // click() {
-  //   this.service.getCategories().subscribe(data => {
-  //     this.newArray = data;
-  //     this.newArray.forEach(element => this.arrayOfCategories.push(element.name))
-  //     console.log(this.arrayOfCategories)
-  //   })
-  // }
+
+
+  click(el) {
+    console.log(el)
+    let searchingEl = el.getAttribute('data-index')
+    console.log(this.arrayOfCategories[searchingEl])
+  }
 }
