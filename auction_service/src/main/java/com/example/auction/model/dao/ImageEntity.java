@@ -15,6 +15,8 @@ public class ImageEntity {
 
     private String path;
 
+    private String directory;
+
     private boolean main;
 
 }

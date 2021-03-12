@@ -67,4 +67,13 @@ return userService.registerUser(registerUserRequest);
     public String addAuction (@RequestParam ("imageFile") List<MultipartFile> file, @RequestParam ("auction") String auction){
     return auctionService.addAuction(file, auction);
     }
+
+//    @PostMapping("/auction2")
+//    public String addAuction (@RequestParam ("auction") String auction){
+//        return auctionService.addAuction(auction);
+//    }
+    @GetMapping("/auctions/{userEmail}")
+    public List<GetAuctionResponse> getAuctions (@PathVariable (name="userEmail") String userEmail){
+    return auctionService.getAuctionsByUser(userEmail);
+    }
 }
