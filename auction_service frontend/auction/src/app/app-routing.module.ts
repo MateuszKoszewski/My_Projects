@@ -5,6 +5,7 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { LoggingInComponent } from './logging-in/logging-in.component';
 import { UserGuardGuard } from './logging-in/user-guard.guard';
 import { MainPageComponent } from './main-page/main-page.component';
+import { MyAuctionsComponent } from './my-auctions/my-auctions.component';
 import { UserRegisterComponent } from './user-register/user-register.component';
 
 const routes: Routes = [{
@@ -20,6 +21,10 @@ const routes: Routes = [{
 {
   path: 'register',
   component: UserRegisterComponent
+},
+{
+  path: 'myAuctions',
+  component: MyAuctionsComponent, canActivate: [UserGuardGuard]
 },
 {
   path: 'mainpage',

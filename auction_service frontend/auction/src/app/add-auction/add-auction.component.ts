@@ -1,3 +1,4 @@
+import { isNull } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuctionEntity } from '../AuctionEntity';
@@ -115,22 +116,31 @@ export class AddAuctionComponent implements OnInit {
     console.log(this.array)
     this.auction = new AuctionEntity(form.value.title, form.value.category, form.value.description, form.value.minPrice, form.value.buyNowPrice, new LocalizationEntity(form.value.county, form.value.city, form.value.postCode), form.value.promoted, this.arrayOfImageNames, this.loggedInUser.emailAddress)
     let formData = new FormData;
-    formData.append('auction', JSON.stringify(this.auction))
-    for (let i = 0; i < this.array.length; i++) {
-      formData.append('imageFile', this.array[i], this.array[i].name)
-    }
+    let data = JSON.stringify(this.auction)
 
+    if (this.array.length > 0) {
+      formData.append('auction', data)
 
-
-    console.log(formData)
-    this.service.addAuction(formData).subscribe(response => {
-      console.log(response.status);
-      if (response.status === 200) {
-        this.uploadMessage = 'Image uploaded successfully';
-      } else {
-        this.uploadMessage = 'Image not uploaded successfully';
+      for (let i = 0; i < this.array.length; i++) {
+        formData.append('imageFile', this.array[i], this.array[i].name)
       }
-    });
+
+
+
+      console.log(formData)
+
+      this.service.addAuction(formData).subscribe(response => {
+        console.log(response.status);
+        if (response.status === 200) {
+          this.uploadMessage = 'Image uploaded successfully';
+        } else {
+          this.uploadMessage = 'Image not uploaded successfully';
+        }
+      });
+    }
+    else {
+      this.service.addAuction2(data).subscribe(response => console.log(response))
+    }
   }
 
 

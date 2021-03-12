@@ -21,8 +21,11 @@ export class AddAuctionServiceService {
   getUser(emailAddress: String): Observable<UserEntity> {
     return this.http.get<UserEntity>('http://localhost:8080/user/' + emailAddress)
   }
-  addAuction(uploadImageData: FormData) {
+  addAuction(uploadImageData) {
     return this.http.post('http://localhost:8080/auction', uploadImageData, { observe: 'response' });
+  }
+  addAuction2(uploadImageData) {
+    return this.http.post('http://localhost:8080/auction2', uploadImageData, { observe: 'response' });
   }
 
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { GlobalService } from '../global.service';
+
 
 import { MainPageService } from './main-page.service';
 
@@ -9,12 +11,12 @@ import { MainPageService } from './main-page.service';
 })
 export class MainPageComponent implements OnInit {
 
-  constructor(private service: MainPageService) { }
+  constructor(private service: MainPageService, private globalService: GlobalService) { }
 
   localization: String;
   newArray = [];
   arrayOfCategories = [];
-
+  displayAdminPanel: boolean = false;
   text: String;
   ngOnInit(): void {
     this.service.getCategories().subscribe(data => {
@@ -22,6 +24,7 @@ export class MainPageComponent implements OnInit {
       this.newArray.forEach(element => this.arrayOfCategories.push(element.name))
       console.log(this.arrayOfCategories)
     })
+
   }
 
 

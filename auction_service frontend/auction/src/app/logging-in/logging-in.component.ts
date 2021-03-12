@@ -33,12 +33,21 @@ export class LoggingInComponent implements OnInit {
     this.service.getAuth(this.userEmail, this.userPassword).subscribe(data => {
       this.service.useremail = this.userEmail;
       this.service.password = this.userPassword;
+
       if (data === "authenticated succesfully") {
         this.message = "authenticated succesfully"
         // this.loggedIn = true;
+
         this.globalService.loggedIn = true;
         this.globalService.loggedInUserEmail = this.userEmail
         this.globalService.loggedInUserPassword = this.userPassword;
+        this.globalService.loggedInAdmin = false;
+        console.log(this.globalService.loggedInUserEmail)
+        if (this.globalService.loggedInUserEmail === "admin@admin") {
+          this.globalService.loggedInAdmin = true;
+        }
+
+
         // this.routing.navigateByUrl('addauction')
       }
     }, error => {
@@ -49,7 +58,6 @@ export class LoggingInComponent implements OnInit {
       }
     }
     )
-
   }
   moveToRegister() {
     this.service.moveToRegister()

@@ -9,18 +9,16 @@ import { MainPageModule } from './main-page/main-page.module';
 import { LoggingInModule } from './logging-in/logging-in.module';
 import { AddAuctionModule } from './add-auction/add-auction.module';
 import { AdminPanelModule } from './admin-panel/admin-panel.module';
-import { UserRegisterComponent } from './user-register/user-register.component';
 import { UserRegisterModule } from './user-register/user-register.module';
-
-
-
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialsModule } from './materials/materials.module';
+import { MyAuctionsComponent } from './my-auctions/my-auctions.component';
+import { MyAuctionsModule } from './my-auctions/my-auctions.module';
 
 
 @NgModule({
   declarations: [
     AppComponent
-
   ],
   imports: [
     BrowserModule,
@@ -31,7 +29,10 @@ import { UserRegisterModule } from './user-register/user-register.module';
     LoggingInModule,
     AddAuctionModule,
     UserRegisterModule,
-    AdminPanelModule
+    AdminPanelModule,
+    BrowserAnimationsModule,
+    MaterialsModule,
+    MyAuctionsModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

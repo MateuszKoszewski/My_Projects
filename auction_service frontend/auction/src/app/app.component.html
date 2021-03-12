@@ -1,5 +1,20 @@
-<a routerLink="/mainpage" class="routing"> main page </a>
-<a routerLink="/logg" class="routing"> Logg in </a>
-<a style="color: blue" routerLink="/addauction" class="routing"> add auction </a>
-<a routerLink="/admin" class="routing">admin panel</a>
+<button routerLink="/mainpage" mat-flat-button>Strona główna</button>
+
+
+<mat-menu #userPanel="matMenu">
+  <button routerLink="/logg" mat-menu-item>zaloguj</button>
+  <button routerLink="/addauction" mat-menu-item>dodaj aukcję</button>
+  <button routerLink="/myAuctions" mat-menu-item>moje aukcje</button>
+  <button mat-menu-item (click)="logOut()">wyloguj</button>
+</mat-menu>
+
+<button mat-flat-button [matMenuTriggerFor]="userPanel" (click)="showDisplayAdminPanel()">panel użytkownika</button>
+<mat-menu #adminPanel="matMenu">
+  <button routerLink="/admin" mat-menu-item>dodaj kategorię</button>
+  <button mat-menu-item>usuń aukcję</button>
+</mat-menu>
+
+<button *ngIf="showDisplayAdminPanel()" mat-flat-button [matMenuTriggerFor]="adminPanel">panel admina</button>
+
+
 <router-outlet></router-outlet>

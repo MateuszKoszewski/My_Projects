@@ -6,12 +6,13 @@ import { DisplayImageComponent } from './display-image/display-image.component';
 import { AddAuctionServiceService } from './add-auction-service.service';
 import { HttpClientModule } from '@angular/common/http';
 import { MainPageService } from '../main-page/main-page.service';
+import { DisplayAuctionComponent } from './display-auction/display-auction.component';
 
 
 
 
 @NgModule({
-  declarations: [AddAuctionComponent, DisplayImageComponent],
+  declarations: [AddAuctionComponent, DisplayImageComponent, DisplayAuctionComponent],
   imports: [
     CommonModule, FormsModule, HttpClientModule
   ],

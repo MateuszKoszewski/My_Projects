@@ -1,0 +1,17 @@
+.observe{
+  font-size: 10px;
+}
+.image{
+  float: left;
+}
+.image:hover{
+  cursor: pointer;
+}
+.title{
+  position: relative;
+   left: 10px;
+}
+.title:hover{
+  color:rebeccapurple;
+  cursor: pointer;
+}

@@ -1,0 +1,9 @@
+<header style="text-align: center; font-size: 30px; font-style: italic; margin: 10px;">{{userName}} <br><br> wystawione
+  przez Ciebie aukcje:</header>
+<button type="button" (click)="showArray()">button in parent</button>
+
+<!-- <app-display-single-auction *ngIf="displayLittleAuction" [auction]="arrayOfAllAuctions[0]"></app-display-single-auction> -->
+<div *ngFor="let auction of arrayOfAllAuctions; let i=index" [attr.data-index]="i">
+  <app-display-single-auction *ngIf="displayLittleAuction" [auction]="arrayOfAllAuctions[i]" style="margin: 10px">
+  </app-display-single-auction>
+</div>

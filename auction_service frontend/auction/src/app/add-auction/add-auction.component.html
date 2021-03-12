@@ -2,7 +2,7 @@
 
 <div style="background-color: antiquewhite;">
   <input type="file">
-  <form #firstForm="ngForm" (ngSubmit)="onSubmit(firstForm)">
+  <form #firstForm="ngForm" (ngSubmit)="onSubmit(firstForm)" enctype="multipart/form-data">
     <div class="first_div">
       <label for="title">wpisz tytuł</label>
       <input type="text" minlength="6" id="title" name="title" ngModel required>
@@ -26,10 +26,10 @@
       <div #el *ngFor="let qwe of howManyImages; let i=index" [attr.data-index]="i">
         <app-display-image (exprotingArray)="import($event, el)">
         </app-display-image>
+        <p *ngIf="uploadMessage">{{uploadMessage}}</p>
       </div>
-
       <button type="button" (click)="kliknij()">kliknij</button>
-      <p *ngIf="uploadMessage">{{uploadMessage}}</p>
+
     </div>
     <div style="clear: both;">
       <label for="minPrice">wpisz kwotę minimalną</label>
@@ -62,3 +62,4 @@
     <button type="submit" style="height: 20px; width: 50px;">Dodaj ogłoszenie</button>
   </form>
 </div>
+<button>button</button>

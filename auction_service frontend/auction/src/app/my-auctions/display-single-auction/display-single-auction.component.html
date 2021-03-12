@@ -1,0 +1,17 @@
+<div style="position: relative; background-color:blanchedalmond; height: 150px;">
+
+  <div style="position: relative; height=100%">
+    <img [src]="mainImage" width="200px" height="150px" class="image">
+    <h2 class="title">{{title}}</h2>
+    <button mat-fab class="observe"
+      style="position: relative; float: right; bottom: 30px; right: 200px;">Obserwuj</button>
+    <h5 style="position: relative; top:80px">data wystawienia aukcji: {{dateOfStart}}</h5>
+    <h4 style="float:right; position: relative; right: -20px; bottom: 80px; font-style: italic;">cena aktualna:
+      {{minPrice}} </h4>
+    <button mat-raised-button style="position: relative; float: right; right: -140px; bottom: 50px;">Lictuj!</button>
+    <button mat-raised-button style="position: relative; float: right; right: -210px; bottom: -10px ">Kup Teraz za
+      {{buyNowPrice}}
+      zł!</button>
+  </div>
+
+</div>
