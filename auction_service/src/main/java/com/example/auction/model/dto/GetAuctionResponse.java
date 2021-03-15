@@ -12,6 +12,8 @@ import java.util.List;
 @Builder
 public class GetAuctionResponse {
 
+    private Long id;
+
     private String title;
 
     private String description;
@@ -26,5 +28,7 @@ public class GetAuctionResponse {
 
     private LocalizationEntity localization;
     private GetUserResponse user;
+
+    private boolean isAcive;
 
 }

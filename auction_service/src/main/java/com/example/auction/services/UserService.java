@@ -45,7 +45,7 @@ public class UserService {
             address.setNumberOfHouse(registerUserRequest.getAddress().getNumberOfHouse());
             address.setNumberOfFlat(registerUserRequest.getAddress().getNumberOfFlat());
             address.setPostCode(registerUserRequest.getAddress().getPostCode());
-            user.setAddressEntity(address);
+            user.setAddress(address);
             Optional<AuthorityEntity> authority = authoritiesRepository.findAuthorityEntityByAuthority("ROLE_USER");
             authority.ifPresent(user::setAuthorityEntity);
             usersRepository.save(user);

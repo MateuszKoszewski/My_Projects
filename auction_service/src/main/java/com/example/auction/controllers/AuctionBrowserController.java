@@ -1,5 +1,6 @@
 package com.example.auction.controllers;
 
+import com.example.auction.model.dao.LocalizationEntity;
 import com.example.auction.model.dto.*;
 import com.example.auction.services.AuctionService;
 import com.example.auction.services.UserService;
@@ -13,7 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -76,4 +79,16 @@ return userService.registerUser(registerUserRequest);
     public List<GetAuctionResponse> getAuctions (@PathVariable (name="userEmail") String userEmail){
     return auctionService.getAuctionsByUser(userEmail);
     }
+
+    @GetMapping("/localization")
+    public Map<String, HashSet<String>> getLocalizations (){
+    return auctionService.getLocalizations();
+    }
+
+    @GetMapping("/auction")
+    public List<GetAuctionResponse> getAuctionsBySearchingTag (@RequestParam (value = "searchingTag") String searchingTag, @RequestParam(value="county") String county, @RequestParam(value="city") String city, @RequestParam(value="category") String category){
+    return auctionService.getAuctionsBySearchingTag(searchingTag, county, city, category);
+    }
+//    @GetMapping("/observation")
+//    public List<GetObservationsResponse> getObservationsByAuctions
 }

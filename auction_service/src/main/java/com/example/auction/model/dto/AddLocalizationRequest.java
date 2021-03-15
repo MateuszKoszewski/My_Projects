@@ -7,5 +7,5 @@ public class AddLocalizationRequest {
 
     private String county;
     private String city;
-    private String postCode;
+//    private String postCode;
 }

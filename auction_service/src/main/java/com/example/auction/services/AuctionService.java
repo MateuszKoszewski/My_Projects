@@ -4,16 +4,14 @@ import com.example.auction.model.dao.*;
 import com.example.auction.model.dto.*;
 import com.example.auction.model.exceptions.AppErrorMessage;
 import com.example.auction.model.exceptions.AppException;
-import com.example.auction.repositories.AuctionRepository;
-import com.example.auction.repositories.CategoryRepository;
-import com.example.auction.repositories.ImagesRepository;
-import com.example.auction.repositories.UsersRepository;
+import com.example.auction.repositories.*;
 import com.example.auction.utils.FileUploadUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.core.io.InputStreamSource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -31,6 +29,7 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -41,7 +40,7 @@ public class AuctionService {
     private final CategoryRepository categoryRepository;
     private final ImagesRepository imagesRepository;
     private final UsersRepository usersRepository;
-    private final ServletContext servletContext;
+
 
     public List<GetAuctionResponse> getAllAuctions() {
         return auctionRepository.findAll().stream().map(auction -> GetAuctionResponse.builder()
@@ -54,7 +53,7 @@ public class AuctionService {
     public AddCategoryResponse addCategory(AddCategoryRequest addCategoryRequest) {
         CategoryEntity newCategory = new CategoryEntity();
         newCategory.setName(addCategoryRequest.getName());
-        newCategory.setDescription(addCategoryRequest.getDescription());
+//        newCategory.setDescription(addCategoryRequest.getDescription());
         categoryRepository.save(newCategory);
         return new AddCategoryResponse("category added");
     }
@@ -63,7 +62,7 @@ public class AuctionService {
         return categoryRepository.findAll().stream().map(category ->
                 GetCategoriesResponse.builder()
                         .name(category.getName())
-                        .description(category.getDescription())
+//                        .description(category.getDescription())
                         .build()).collect(Collectors.toList());
     }
 
@@ -92,7 +91,8 @@ public class AuctionService {
             LocalizationEntity localizationEntity = new LocalizationEntity();
             localizationEntity.setCounty(addAuctionResponse.getAddress().getCounty());
             localizationEntity.setCity(addAuctionResponse.getAddress().getCity());
-            localizationEntity.setPostCode(addAuctionResponse.getAddress().getPostCode());
+
+//            localizationEntity.setPostCode(addAuctionResponse.getAddress().getPostCode());
             AuctionEntity auctionEntity = new AuctionEntity();
             auctionEntity.setTitle(addAuctionResponse.getTitle());
             auctionEntity.setDescription(addAuctionResponse.getDescription());
@@ -105,11 +105,11 @@ public class AuctionService {
             auctionEntity.setDateOfStart(LocalDate.now());
             auctionEntity.setDateOfFinish(LocalDate.now().plusDays(14));
             auctionEntity.setUserEntity(userEntity);
+            auctionEntity.setActive(true);
             auctionRepository.save(auctionEntity);
         }
         return auction;
     }
-
 
 
 //    public String addAuction(String auction) {
@@ -151,7 +151,7 @@ public class AuctionService {
         String fileName = file.getOriginalFilename();
         imageEntity.setMain(isMainImage);
         imageEntity.setDirectory(uploadPath);
-        imageEntity.setPath(uploadPath+"/"+fileName);
+        imageEntity.setPath(uploadPath + "/" + fileName);
         try {
             FileUploadUtil.saveFile(uploadPath, fileName, file);
 
@@ -166,6 +166,7 @@ public class AuctionService {
 
         UserEntity userEntity = usersRepository.findByEmailAddress(userEmail).orElseThrow(() -> new AppException(AppErrorMessage.USER_DOES_NOT_EXISTS, userEmail));
         List<AuctionEntity> listOfAuctionsByUser = auctionRepository.findByUserEntity(userEntity);
+        ModelMapper mapper = new ModelMapper();
         return listOfAuctionsByUser.stream().map(auction -> GetAuctionResponse.builder().
                 title(auction.getTitle())
                 .description(auction.getDescription())
@@ -175,20 +176,17 @@ public class AuctionService {
                 .dateOfStart(auction.getDateOfStart())
                 .dateOfFinish(auction.getDateOfFinish())
                 .localization(auction.getLocalization())
-                .user(GetUserResponse.builder()
-                        .emailAddress(auction.getUserEntity().getEmailAddress())
-                        .address(auction.getUserEntity().getAddressEntity())
-                        .name(auction.getUserEntity().getName())
-                        .lastName(auction.getUserEntity().getLastName())
-                        .build())
+                .user(mapper.map(userEntity, GetUserResponse.class))
+                .isAcive(auction.isActive())
+                .id(auction.getId())
                 .build()).collect(Collectors.toList());
     }
 
-    private List<ImageModel> mapToImageModel (List<ImageEntity> listOfImageEntities){
+    private List<ImageModel> mapToImageModel(List<ImageEntity> listOfImageEntities) {
         return listOfImageEntities.stream().map(picture -> {
             File file = new File(picture.getPath());
             String encodedString = null;
-            try (FileInputStream imageInFile = new FileInputStream(file)){
+            try (FileInputStream imageInFile = new FileInputStream(file)) {
 
                 byte[] fileContent = FileUtils.readFileToByteArray(file);
                 imageInFile.read(fileContent);
@@ -200,17 +198,45 @@ public class AuctionService {
         }).collect(Collectors.toList());
     }
 
-//    public Resource loadFile(String filename) {
-//        try {
-//            Path file = rootLocation.resolve(filename);
-//            Resource resource = new UrlResource(file.toUri());
-//            if (resource.exists() || resource.isReadable()) {
-//                return resource;
-//            } else {
-//                throw new RuntimeException("FAIL!");
-//            }
-//        } catch (MalformedURLException e) {
-//            throw new RuntimeException("FAIL!");
-//        }
-//    }
+    public Map<String, HashSet<String>> getLocalizations() {
+        List<AuctionEntity> listOfAllAuctions = auctionRepository.findAll();
+        Map<String, HashSet<String>> mapaMapy = new HashMap<>();
+        listOfAllAuctions.stream().map(AuctionEntity::getLocalization).collect(Collectors.toList()).forEach(localization -> {
+            HashSet<String> wewnetrznySet;
+            if (mapaMapy.get(localization.getCounty()) != null) {
+                wewnetrznySet = mapaMapy.get(localization.getCounty());
+            } else {
+                wewnetrznySet = new HashSet<>();
+            }
+            HashSet<String> newSet = new HashSet<>(wewnetrznySet);
+            newSet.add(localization.getCity());
+            mapaMapy.put(localization.getCounty(), newSet);
+        });
+        return mapaMapy;
+    }
+
+    public List<GetAuctionResponse> getAuctionsBySearchingTag (String searchingTag, String county, String city, String category){
+        ModelMapper mapper = new ModelMapper();
+
+List<AuctionEntity> listOfAllAuctions = auctionRepository.findAll();
+String tagToSearch = searchingTag.split(" ")[0];
+List<AuctionEntity> listOfFilteredAuctions = listOfAllAuctions.stream()
+        .filter(auction-> auction.getTitle().contains(tagToSearch)).filter(auction -> !county.isBlank() ? auction.getLocalization().getCounty().equals(county) : auction.getLocalization()!=null)
+        .filter(auction-> !city.isBlank() ? auction.getLocalization().getCity().equals(city) : auction.getLocalization()!=null)
+        .filter(auction -> !category.isBlank() ? auction.getCategory().getName().equals(category) : auction.getCategory()!=null).collect(Collectors.toList());
+
+return listOfFilteredAuctions.stream().filter(auction -> auction.getTitle().contains(tagToSearch)).map(auction -> GetAuctionResponse.builder()
+      .title(auction.getTitle())
+      .localization(auction.getLocalization())
+      .pictures(mapToImageModel(auction.getPictures()))
+      .user(mapper.map(auction.getUserEntity(), GetUserResponse.class))
+      .description(auction.getDescription())
+      .minPrice(auction.getMinPrice())
+      .dateOfStart(auction.getDateOfStart())
+      .dateOfFinish(auction.getDateOfFinish())
+      .buyNowPrice(auction.getBuyNowPrice())
+        .id(auction.getId())
+        .isAcive(auction.isActive())
+      .build()).collect(Collectors.toList());
+    }
 }

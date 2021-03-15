@@ -12,7 +12,6 @@ import java.time.LocalDate;
 
 @Data
 
-@Builder
 public class GetUserResponse {
 
     private String emailAddress;

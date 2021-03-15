@@ -14,5 +14,8 @@ public class LocalizationEntity {
     private Long id;
     private String county;
     private String city;
-    private String postCode;
+
+
 }
+
+

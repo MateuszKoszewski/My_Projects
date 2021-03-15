@@ -26,7 +26,7 @@ public class UserEntity {
 
     @JoinColumn
     @OneToOne(cascade = {CascadeType.ALL})
-    private AddressEntity addressEntity;
+    private AddressEntity address;
 
     private LocalDate dateOfCreatingUser;
 

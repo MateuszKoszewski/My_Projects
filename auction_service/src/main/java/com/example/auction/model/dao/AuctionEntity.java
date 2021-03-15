@@ -47,5 +47,7 @@ public class AuctionEntity {
     @JoinColumn
     private UserEntity userEntity;
 
+    private boolean isActive;
+
 
 }

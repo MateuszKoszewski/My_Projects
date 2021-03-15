@@ -29,6 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/getAllAuctions").hasAnyRole("USER", "ADMIN")
                 .antMatchers(HttpMethod.GET, "/log").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.GET, "/auctions/{userEmail}").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.GET, "/user/{userEmail}").hasAnyRole("USER", "ADMIN")
                 .anyRequest().permitAll()
                 .and()
                 .headers().frameOptions().sameOrigin()
