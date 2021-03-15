@@ -8,19 +8,15 @@ import { UserEntity } from './UserEntity';
 export class GlobalService {
 
   constructor(private router: Router) { }
-  loggedIn: boolean = false;
   loggedInUser: UserEntity = null;
-  loggedInUserEmail: String = null;
-  loggedInUserPassword: String = null;
-  loggedInAdmin: boolean = false;
+  subscribedUser: boolean = false;
+
 
   logOut() {
-    this.loggedIn = false;
-    this.loggedInUserEmail = null;
-    this.loggedInUserPassword = null;
     this.loggedInUser = null;
-    this.loggedInAdmin = false;
     this.router.navigateByUrl('/mainpage')
+    sessionStorage.removeItem('user')
+
   }
 
 }

@@ -3,9 +3,9 @@ import { AddressEntity } from './AddressEntity';
 export class UserEntity {
 
   emailAddress: String;
-  private password: String;
-  private name: String;
-  private lastName: String;
+  password: String;
+  name: String;
+  lastName: String;
   address: AddressEntity;
 
   constructor(emailAddress: String, password: String, name: String, lastName: String, address: AddressEntity) {

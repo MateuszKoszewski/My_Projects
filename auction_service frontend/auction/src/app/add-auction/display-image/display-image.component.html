@@ -1,5 +1,19 @@
-<div class="image">
-  <div style="float: left;" *ngIf="message">{{message}}</div>
-  <input type="file" (change)="selectFile($event)">
-  <img width="150px" height="100px" [src]="url" *ngIf="url">
+<div class="image" style="width: 150px; height: 100px;">
+
+  <input type="file" #input (change)="selectFile($event)" ngModel style="display: none;">
+  <input type="file" #toReplace style="display: none;">
+  <div style="float: left; position: relative; left: 200px; border: black; border-style: solid;" *ngIf="message">
+    {{message}}</div>
+  <div style="width: 100%; height: 100%; border: red; border-style: solid;">
+
+
+    <img [src]="url" *ngIf="url"
+      style="width: 150px; height: 100px; margin: 0;  border: white; border-style: solid; clear: both; ">
+
+  </div>
+  <button mat-flat-button type="button" (click)="input.click()"
+    style="position: relative; bottom: 100px; height: 100px; width: 150px; background-color: transparent;">{{inputMessage}}</button>
+
+  <!-- <button type="button" (click)="tete()" *ngIf="url" style="position: relative; bottom: 170px;">dziwne</button> -->
+
 </div>

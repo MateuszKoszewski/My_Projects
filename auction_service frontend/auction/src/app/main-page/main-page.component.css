@@ -6,30 +6,27 @@ box-sizing: border-box;
 margin: 10px;
 }
 
-.browser {
-  float: left;
-  background-color: bisque;
-  width: 30%;
-}
-.lokalizacja {
-  float: left;
-  width: 30%;
-}
-.roboczy{
-  clear: both;
-}
+
 .kategorie{
+  position: relative;
+  top: 50px;
  margin: 10px;
  text-align: center;
  font-size: 30px;
 }
 .promotion{
+  position: relative;
+  top:100px;
   margin: 10px;
   text-align: center;
   font-size: 30px;
 }
 .category {
-  color: blue
+  color: blue;
+  position: relative;
+  margin: 10px;
+  top:20px;
+  line-height: 200%;
 }
 .category:hover{
   color:blueviolet;

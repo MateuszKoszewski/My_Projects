@@ -1,5 +1,5 @@
 
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 
 @Component({
@@ -12,19 +12,36 @@ export class DisplayImageComponent implements OnInit {
   constructor() { }
 
   // changed: boolean = false;
-  array = [];
-
+  array = []
+  inputMessage = "dodaj"
   ngOnInit(): void {
   }
   message: String;
   url: any;
-  @Output() exprotingArray = new EventEmitter();
+  @Output() exportingArray = new EventEmitter();
   @Output() changeValue = new EventEmitter();
+  @ViewChild('input') input: ElementRef<HTMLInputElement>
+  @ViewChild('toReplace') toReplace: ElementRef<HTMLInputElement>
+  fileReader = new FileReader();
+  @Input() displayCloseButton
+
+
+  // tete() {
+  //   console.log(this.input)
+  //   console.log(this.input.nativeElement.files[0])
+  //   this.input.nativeElement.files = this.toReplace.nativeElement.files
+  //   this.url = ''
+  //   this.array = []
+  //   this.exportingArray.emit(this.array)
+  // }
+
   selectFile(event: any) {
+    console.log("select file worked")
     // this.changed = true;
     // console.log(event)
     if (!event.target.files[0] || event.target.files[0].length == 0) {
-      this.message = 'You must select an image';
+      // this.message = 'You must select an image';
+
       return;
     }
 
@@ -41,11 +58,13 @@ export class DisplayImageComponent implements OnInit {
     reader.onload = (_event) => {
       this.message = "";
       this.url = reader.result;
+      this.inputMessage = "zmień"
       // if (event.target.files === undefined) {
       //   this.exprotingArray.emit(null);
       // }
       this.array = [event.target.files[0]]
-      this.exprotingArray.emit(this.array)
+      this.exportingArray.emit(this.array)
+
       // this.emitChange();
     }
   }

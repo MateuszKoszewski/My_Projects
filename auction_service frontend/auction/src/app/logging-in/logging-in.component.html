@@ -1,4 +1,4 @@
-<div id="panel">
+<div *ngIf="displayLoginPanel" id="panel">
   <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
     <label for="email">email:</label>
     <input type="text" id="email" [(ngModel)]="userEmail" name="email" required email>
@@ -11,3 +11,4 @@
   </form>
   <p>{{message}}</p>
 </div>
+<header *ngIf="!displayLoginPanel">Jesteś już zalogowany jako: {{loggedInUserName}}</header>

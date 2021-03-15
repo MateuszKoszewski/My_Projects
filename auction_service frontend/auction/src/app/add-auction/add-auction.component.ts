@@ -1,4 +1,4 @@
-import { isNull } from '@angular/compiler/src/output/output_ast';
+
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuctionEntity } from '../AuctionEntity';
@@ -34,6 +34,8 @@ export class AddAuctionComponent implements OnInit {
   arrayOfImageNames = [];
   auction: AuctionEntity;
   arrayOfFormData = [];
+  selectedValueOfCategory: String;
+
 
   ngOnInit(): void {
     this.mainPageService.getCategories().subscribe(data => {
@@ -41,16 +43,29 @@ export class AddAuctionComponent implements OnInit {
       this.newOptionsArray.forEach(element =>
         this.optionsArray.push(element.name))
     });
-    this.service.getUser(this.globalService.loggedInUserEmail).subscribe(data => {
-      this.loggedInUser = data;
-      console.log(this.loggedInUser)
-      if (this.loggedInUser.address != null) {
-        this.county = this.loggedInUser.address.county;
-        this.city = this.loggedInUser.address.city;
-        this.postCode = this.loggedInUser.address.postCode;
-      }
-    });
+
+    console.log("init of add-auction")
+    this.loggedInUser = this.globalService.loggedInUser
+    console.log("this user from addAuction:" + this.loggedInUser)
+
+    if (this.loggedInUser.address != null) {
+      this.county = this.loggedInUser.address.county;
+      this.city = this.loggedInUser.address.city;
+      this.postCode = this.loggedInUser.address.postCode;
+    }
+
+
+    // this.service.getUser(sessionStorage.getItem('userLogin')).subscribe(data => {
+    //   this.loggedInUser = data
+    //   if (this.loggedInUser.address != null) {
+    //     this.county = this.loggedInUser.address.county;
+    //     this.city = this.loggedInUser.address.city;
+    //     this.postCode = this.loggedInUser.address.postCode;
+    //   }
+    // }
   }
+
+
 
   shouldDisplaySomething() {
     this.displaySomething = !this.displaySomething;
@@ -58,11 +73,18 @@ export class AddAuctionComponent implements OnInit {
 
   button() {
     this.service.getAllAuctions().subscribe(auction => console.log(auction));
+    console.log("user from globarservice " + this.globalService.loggedInUser)
+    console.log(this.globalService.loggedInUser)
+    console.log("this " + this.loggedInUser)
+
+
   }
 
   import(takenValue: any, el) {
     let index = el.getAttribute('data-index')
     // console.log(takenValue)
+    console.log(takenValue)
+    console.log(index)
     if (takenValue.length === 2) {
       this.nastepnyArray[index] = true;
     }
@@ -71,76 +93,84 @@ export class AddAuctionComponent implements OnInit {
     }
 
     this.array[index] = takenValue[0];
-    this.arrayOfImageNames.push(takenValue[0].name)
-    if (index == this.howManyImages.length - 1) {
-      this.howManyImages.push(1)
-      this.nastepnyArray.push(false)
+    if (takenValue[0] != undefined) {
+
+      this.arrayOfImageNames.push(takenValue[0].name)
+
+      if (index == this.howManyImages.length - 1) {
+        this.howManyImages.push(1)
+        this.nastepnyArray.push(false)
+      }
+      console.log("ilosc zdjec: " + this.howManyImages.length)
+      let newData = new FormData()
+      newData.append('imageFile', takenValue[0], takenValue[0].name)
+      this.arrayOfFormData.push(newData)
     }
-    let newData = new FormData()
-    newData.append('imageFile', takenValue[0], takenValue[0].name)
-    this.arrayOfFormData.push(newData)
-  }
-
-  kliknij() {
-
-    this.uploadImages();
-    console.log(this.arrayOfImageNames)
-  }
-
-  uploadImages() {
-
-    for (let i = 0; i < this.array.length; i++) {
-
-      let uploadImageData = new FormData();
-      let newFile: File = this.array[i];
-      uploadImageData.append('imageFile', newFile, newFile.name);
-      console.log(uploadImageData)
-
-      // this.service.uploadImages(uploadImageData).subscribe((response) => {
-      //   console.log(response.status)
-      //   if (response.status === 200) {
-      //     this.uploadMessage = 'Image uploaded successfully';
-      //   } else {
-      //     this.uploadMessage = 'Image not uploaded successfully';
-      //   }
-      // })
+    else {
+      console.log("undefined dziala")
+      this.howManyImages.splice(index, 1)
+      console.log("czy usunelo?" + this.howManyImages.length)
     }
-    // console.log(this.array)
-    // this.arrayRoboczy[0] = 5;
-    // this.arrayRoboczy.push(null);
-    // this.arrayRoboczy[2] = 6;
-    // console.log(this.arrayRoboczy);
-
   }
+
+  // kliknij() {
+
+  //   this.uploadImages();
+  //   console.log(this.arrayOfImageNames)
+  // }
+
+  // uploadImages() {
+  //   for (let i = 0; i < this.array.length; i++) {
+  //     let uploadImageData = new FormData();
+  //     let newFile: File = this.array[i];
+  //     uploadImageData.append('imageFile', newFile, newFile.name);
+  //     console.log(uploadImageData)
+
+  //     this.service.uploadImages(uploadImageData).subscribe((response) => {
+  //       console.log(response.status)
+  //       if (response.status === 200) {
+  //         this.uploadMessage = 'Image uploaded successfully';
+  //       } else {
+  //         this.uploadMessage = 'Image not uploaded successfully';
+  //       }
+  //     })
+  //   }
+  //   console.log(this.array)
+  //   this.arrayRoboczy[0] = 5;
+  //   this.arrayRoboczy.push(null);
+  //   this.arrayRoboczy[2] = 6;
+  //   console.log(this.arrayRoboczy);
+
+  // }
   onSubmit(form: NgForm) {
     console.log(this.array)
-    this.auction = new AuctionEntity(form.value.title, form.value.category, form.value.description, form.value.minPrice, form.value.buyNowPrice, new LocalizationEntity(form.value.county, form.value.city, form.value.postCode), form.value.promoted, this.arrayOfImageNames, this.loggedInUser.emailAddress)
+    console.log(form);
+    this.auction = new AuctionEntity(form.value.title, form.value.category, form.value.description, form.value.minPrice, form.value.buyNowPrice, new LocalizationEntity(form.value.county, form.value.city), form.value.promoted, this.arrayOfImageNames, this.loggedInUser.emailAddress)
     let formData = new FormData;
     let data = JSON.stringify(this.auction)
 
-    if (this.array.length > 0) {
-      formData.append('auction', data)
 
-      for (let i = 0; i < this.array.length; i++) {
-        formData.append('imageFile', this.array[i], this.array[i].name)
+    formData.append('auction', data)
+
+    for (let i = 0; i < this.array.length; i++) {
+      formData.append('imageFile', this.array[i], this.array[i].name)
+    }
+
+    console.log(this.array)
+    console.log(formData)
+
+    this.service.addAuction(formData).subscribe(response => {
+      console.log(response.status);
+      if (response.status === 200) {
+        this.uploadMessage = 'Image uploaded successfully';
+      } else {
+        this.uploadMessage = 'Image not uploaded successfully';
       }
-
-
-
-      console.log(formData)
-
-      this.service.addAuction(formData).subscribe(response => {
-        console.log(response.status);
-        if (response.status === 200) {
-          this.uploadMessage = 'Image uploaded successfully';
-        } else {
-          this.uploadMessage = 'Image not uploaded successfully';
-        }
-      });
-    }
-    else {
-      this.service.addAuction2(data).subscribe(response => console.log(response))
-    }
+    });
+    // }
+    // else {
+    //   this.service.addAuction2(data).subscribe(response => console.log(response))
+    // }
   }
 
 

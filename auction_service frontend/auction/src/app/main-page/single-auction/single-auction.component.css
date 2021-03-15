@@ -1,0 +1,35 @@
+.observe{
+  font-size: 10px;
+}
+.image{
+  float: left;
+}
+.image:hover{
+  cursor: pointer;
+}
+.title{
+  position: relative;
+   left: 10px;
+}
+.title:hover{
+  color:rebeccapurple;
+  cursor: pointer;
+}
+.additionalData{
+  position: relative;
+  float: left;
+  font-style: italic;
+
+}
+.additionalDataRouting{
+  position: relative;
+  float: left;
+  font-style: italic;
+}
+.additionalDataRouting:hover{
+  position: relative;
+  float: left;
+  font-style: italic;
+  color: rebeccapurple;
+  cursor: pointer;
+}

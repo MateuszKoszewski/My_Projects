@@ -1,5 +1,12 @@
-.first_div{
+.title{
+  position: relative;
+  
+  width: 80%;
+  height: 100px;
   margin: 20px;
+  background-color:lightsteelblue;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .image{

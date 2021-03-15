@@ -24,8 +24,8 @@ export class AddAuctionServiceService {
   addAuction(uploadImageData) {
     return this.http.post('http://localhost:8080/auction', uploadImageData, { observe: 'response' });
   }
-  addAuction2(uploadImageData) {
-    return this.http.post('http://localhost:8080/auction2', uploadImageData, { observe: 'response' });
-  }
+  // addAuction2(uploadImageData) {
+  //   return this.http.post('http://localhost:8080/auction2', uploadImageData, { observe: 'response' });
+  // }
 
 }

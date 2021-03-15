@@ -1,34 +1,46 @@
 <button (click)="button()">button</button>
 
-<div style="background-color: antiquewhite;">
+<div style="background-color:#e2e2e2">
+
   <input type="file">
+
   <form #firstForm="ngForm" (ngSubmit)="onSubmit(firstForm)" enctype="multipart/form-data">
-    <div class="first_div">
-      <label for="title">wpisz tytuł</label>
-      <input type="text" minlength="6" id="title" name="title" ngModel required>
+
+    <div class="title">
+
+      <mat-form-field style="position: relative; left: 10px; top:10px; width: 250px;">
+        <mat-label>Tytuł</mat-label>
+        <input matInput size="100px" type="text" minlength=6 id="title" name="title" ngModel required>
+        <mat-hint>minimum 6 znaków</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field style="position: relative; left: 200px; top: 15px;">
+        <mat-label>Kategoria: </mat-label>
+        <mat-select name="category" ngModel>
+          <mat-option [(value)]="optionsArray[i]" *ngFor="let cat of optionsArray; let i = index" required>{{cat}}
+          </mat-option>
+        </mat-select>
+
+      </mat-form-field>
     </div>
-    <div class="second_div">
-      <label for="category">wybierz kategorię</label>
-      <select id="category" name="category" ngModel>
-        <option *ngFor="let cat of optionsArray">{{cat}}</option>
-      </select>
-    </div>
-    <div class="third_div" style="position: relative; margin: 10px;">
-      <label style="top: 50%; position: absolute;">napisz opis</label>
-      <div>
-        <textarea name="description" rows="3" style="position: relative; left: 100px;" ngModel></textarea>
-      </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Opis: </mat-label>
+        <textarea matInput maxlength=500; #description ngModel name="description"></textarea>
+        <mat-hint align="start"></mat-hint>
+        <mat-hint align="end">{{description.value.length}}/100</mat-hint>
+      </mat-form-field>
     </div>
     <button type="button" (click)="shouldDisplaySomething()">display</button>
     <div *ngIf="displaySomething">tetetetetete</div>
     <div style="margin:50px">Dodaj zdjęcia
 
       <div #el *ngFor="let qwe of howManyImages; let i=index" [attr.data-index]="i">
-        <app-display-image (exprotingArray)="import($event, el)">
+        <app-display-image (exportingArray)="import($event, el)">
         </app-display-image>
         <p *ngIf="uploadMessage">{{uploadMessage}}</p>
       </div>
-      <button type="button" (click)="kliknij()">kliknij</button>
+      <!-- <button type="button" (click)="kliknij()">kliknij</button> -->
 
     </div>
     <div style="clear: both;">
@@ -50,10 +62,10 @@
       <label for="city">miasto</label>
       <input type="text" name="city" id="city" ngModel [(ngModel)]="city">
     </div>
-    <div>
+    <!-- <div>
       <label for="postCode">kod pocztowy</label>
       <input type="text" name="postCode" id="postCode" [(ngModel)]="postCode">
-    </div>
+    </div> -->
     <div>
       <label for="wybor2id">Czy ogłoszenie ma być promowane?</label>
       <input type="checkbox" id="wybor2id" name="promoted" ngModel>
@@ -61,5 +73,13 @@
     <div>Standardowo aukcja wystawiana jest na okres 2 tygodni z możliwością przedłużenia</div>
     <button type="submit" style="height: 20px; width: 50px;">Dodaj ogłoszenie</button>
   </form>
+
 </div>
-<button>button</button>
+<div>
+  <mat-form-field>
+    <mat-label>Opis: </mat-label>
+    <textarea matInput maxlength=500; #description ngModel name="description"></textarea>
+    <mat-hint align="start"></mat-hint>
+    <mat-hint align="end">{{description.value.length}}/100</mat-hint>
+  </mat-form-field>
+</div>

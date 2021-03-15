@@ -6,6 +6,12 @@
     <button mat-fab class="observe"
       style="position: relative; float: right; bottom: 30px; right: 200px;">Obserwuj</button>
     <h5 style="position: relative; top:80px; left:5px">data wystawienia aukcji: {{dateOfStart}}</h5>
+    <span style=" left:5px; font-family: cursive;" class="additionalData">aukcja wystawiona przez </span>
+    <span style=" left: 8px; font-family: cursive; font-weight: bold;" class="additionalDataRouting">
+      {{auctionOwner}}</span><br>
+    <span class="additionalData" style="left: 5px;">obserwowana przez</span>
+    <span class="additionalData" style="left: 8px; font-weight: bold;">21</span><span class="additionalData"
+      style="left: 11px">użytkowników</span>
     <h4 style="float:right; position: relative; right: -20px; bottom: 80px; font-style: italic;">cena aktualna:
       {{minPrice}} </h4>
     <button mat-raised-button style="position: relative; float: right; right: -140px; bottom: 50px;">Lictuj!</button>

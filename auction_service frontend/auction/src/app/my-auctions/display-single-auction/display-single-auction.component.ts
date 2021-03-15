@@ -1,12 +1,6 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
-import { EventEmitter } from '@angular/core';
-import { ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
-
-import { GlobalService } from 'src/app/global.service';
-import { MyAuctionsService } from '../my-auctions.service';
-import { image } from './image.const';
 
 
 @Component({

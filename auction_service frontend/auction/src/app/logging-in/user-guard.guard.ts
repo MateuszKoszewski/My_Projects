@@ -13,14 +13,15 @@ export class UserGuardGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
 
-    if (!this.globalService.loggedIn) {
-      this.router.navigateByUrl('logg')
+    if (sessionStorage.length === 0) {
+      this.router.navigate(['logg'], { queryParams: { returnUrl: state.url } });
       return false;
     }
     else {
+
       return true;
     }
-    // return true;
+    return true;
 
   }
 

@@ -1,7 +1,9 @@
+import { stringify } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GlobalService } from '../global.service';
+import { UserEntity } from '../UserEntity';
 import { LoggingService } from './logging.service';
 
 @Component({
@@ -11,18 +13,27 @@ import { LoggingService } from './logging.service';
 })
 export class LoggingInComponent implements OnInit {
 
-  constructor(private service: LoggingService, private globalService: GlobalService, private routing: Router) { }
+  constructor(private service: LoggingService, private globalService: GlobalService, private routing: Router, private route: ActivatedRoute) { }
 
-  ngOnInit(): void {
-  }
-  isLoginMode = false;
-  userEmail: String;
-  userPassword: String;
+  returnUrl: string;
+  displayLoginPanel = true;
+  loggedInUserName: String;
+  loggedInUser: UserEntity;
+  userEmail: string;
+  userPassword: string;
   // loggedIn: boolean = false;
   message: String = ""
-  onSwitchMode() {
-    this.isLoginMode = !this.isLoginMode;
+
+  ngOnInit(): void {
+
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl' || '/'];
+    if (sessionStorage.length > 0) {
+      this.displayLoginPanel = false;
+      this.loggedInUser = this.globalService.loggedInUser;
+      this.loggedInUserName = this.loggedInUser.name;
+    }
   }
+
   onSubmit(form: NgForm) {
     // console.log(form.value);
     // console.log(form);
@@ -31,30 +42,22 @@ export class LoggingInComponent implements OnInit {
 
   authorize() {
     this.service.getAuth(this.userEmail, this.userPassword).subscribe(data => {
-      this.service.useremail = this.userEmail;
-      this.service.password = this.userPassword;
-
-      if (data === "authenticated succesfully") {
+      this.loggedInUser = data;
+      this.globalService.loggedInUser = data;
+      if (this.loggedInUser.emailAddress != null) {
+        console.log(this.loggedInUser)
         this.message = "authenticated succesfully"
-        // this.loggedIn = true;
-
-        this.globalService.loggedIn = true;
-        this.globalService.loggedInUserEmail = this.userEmail
-        this.globalService.loggedInUserPassword = this.userPassword;
-        this.globalService.loggedInAdmin = false;
-        console.log(this.globalService.loggedInUserEmail)
-        if (this.globalService.loggedInUserEmail === "admin@admin") {
-          this.globalService.loggedInAdmin = true;
+        if (this.returnUrl != undefined) {
+          this.routing.navigateByUrl(this.returnUrl);
         }
-
-
-        // this.routing.navigateByUrl('addauction')
+        else {
+          this.routing.navigateByUrl('mainpage')
+        }
+        sessionStorage.setItem('user', JSON.stringify(this.loggedInUser))
       }
     }, error => {
       if (error.status !== 200) {
-        this.message = "worng email or password"
-        // this.loggedIn = false;
-        this.globalService.loggedIn = false;
+        this.message = "wrong email or password"
       }
     }
     )

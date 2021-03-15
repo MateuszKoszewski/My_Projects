@@ -3,17 +3,45 @@
 </div>
 
 <div style="margin: 20px;">
-  <div>
-    <input type="text" placeholder="wyszukaj" class="browser">
-  </div>
-  <div>
-    <input type="text" placeholder="województwo" class="lokalizacja">
-  </div>
-  <div>
-    <input type="text" placeholder="miasto" class="lokalizacja" [(ngModel)]="text">
-  </div>
-  <div class="roboczy">
-  </div>
+  <form #searchinForm="ngForm" (ngSubmit)="onSubmit(searchinForm)">
+
+    <mat-form-field style="position: relative; width: 400px !important;">
+      <mat-label>Wyszukaj: </mat-label>
+      <input matInput type="text" minlength=4 name="searchingTag" ngModel required>
+      <mat-hint>minimum 4 znaki</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field style="position: relative; left: 70px;">
+      <mat-label>województwo: </mat-label>
+      <mat-select #firstOption name="county" ngModel>
+        <mat-option [(value)]="arrayOfCounties[i]" *ngFor="let county of arrayOfCounties; let i = index">
+          {{county}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+    <mat-form-field style="position: relative; left: 120px;">
+      <mat-label>miasto: </mat-label>
+      <mat-select name="city" ngModel (click)="showCities()">
+        <mat-option [(value)]="arrayOfCities[i]" *ngFor="let city of arrayOfCities; let i = index">
+          {{city}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field style="position: relative; left: 200px;">
+      <mat-label>Kategorie: </mat-label>
+      <mat-select name="category" ngModel>
+        <mat-option [(value)]="arrayOfCategories[i]" *ngFor="let category of arrayOfCategories; let i = index">
+          {{category}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div>
+      <button mat-raised-button type="submit" style="position: relative; top:20px">Szukaj!</button>
+    </div>
+  </form>
 </div>
 
 <div class="kategorie">
@@ -23,6 +51,16 @@
     class="category">
     {{cat}} </span>
 </div>
+<div *ngFor="let auction of arrayOfAuctions; let i=index" [attr.data-index]="i">
+
+  <app-single-auction *ngIf="displaySearchedAuctions" style="margin: 5px; position: relative; top: 50px;"
+    [auction]="arrayOfAuctions[i]">
+  </app-single-auction>
+
+</div>
 <div class="promotion">
   Ogłoszenie promowane w {{localization}}
+</div>
+<div>
+  <button type="button" (click)="kliknij()">button</button>
 </div>

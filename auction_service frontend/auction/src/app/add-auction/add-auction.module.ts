@@ -7,6 +7,7 @@ import { AddAuctionServiceService } from './add-auction-service.service';
 import { HttpClientModule } from '@angular/common/http';
 import { MainPageService } from '../main-page/main-page.service';
 import { DisplayAuctionComponent } from './display-auction/display-auction.component';
+import { MaterialsModule } from '../materials/materials.module';
 
 
 
@@ -14,7 +15,7 @@ import { DisplayAuctionComponent } from './display-auction/display-auction.compo
 @NgModule({
   declarations: [AddAuctionComponent, DisplayImageComponent, DisplayAuctionComponent],
   imports: [
-    CommonModule, FormsModule, HttpClientModule
+    CommonModule, FormsModule, HttpClientModule, MaterialsModule
   ],
   providers: [AddAuctionServiceService, MainPageService]
 })
