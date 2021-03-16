@@ -1,15 +1,27 @@
 package com.example.auction.model.dao;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import lombok.Data;
+import lombok.Getter;
 
+import javax.persistence.*;
+@Data
 @Entity
 @Table(name = "licytation")
 public class LicytationEntity {
 
     @Id
     private Long id;
+
+    @ManyToOne
+    @JoinColumn
+private AuctionEntity auction;
+
+    @ManyToOne
+    @JoinColumn
+    private UserEntity user;
+
+    private double price;
+
 
 
 }

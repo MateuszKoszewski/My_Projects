@@ -1,8 +1,11 @@
 package com.example.auction.model.dao;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
 @Entity
+@Data
 @Table(name = "Observation_of_auction")
 public class ObservationOfAuctionEntity {
 

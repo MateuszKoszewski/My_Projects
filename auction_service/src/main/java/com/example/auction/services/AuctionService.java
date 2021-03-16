@@ -10,26 +10,18 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.modelmapper.ModelMapper;
-import org.springframework.core.io.InputStreamSource;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletContext;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -40,6 +32,8 @@ public class AuctionService {
     private final CategoryRepository categoryRepository;
     private final ImagesRepository imagesRepository;
     private final UsersRepository usersRepository;
+    private final LicytationsRepository licytationsRepository;
+    private final ObservationRepository observationRepository;
 
 
     public List<GetAuctionResponse> getAllAuctions() {
@@ -175,7 +169,7 @@ public class AuctionService {
                 .minPrice(auction.getMinPrice())
                 .dateOfStart(auction.getDateOfStart())
                 .dateOfFinish(auction.getDateOfFinish())
-                .localization(auction.getLocalization())
+                .localization(mapper.map(auction.getLocalization(), GetLocalizationResponse.class))
                 .user(mapper.map(userEntity, GetUserResponse.class))
                 .isAcive(auction.isActive())
                 .id(auction.getId())
@@ -215,7 +209,7 @@ public class AuctionService {
         return mapaMapy;
     }
 
-    public List<GetAuctionResponse> getAuctionsBySearchingTag (String searchingTag, String county, String city, String category){
+    public List<GetAuctionResponseWithObserversAndLicytation> getAuctionsBySearchingTag (String searchingTag, String county, String city, String category, String userEmail){
         ModelMapper mapper = new ModelMapper();
 
 List<AuctionEntity> listOfAllAuctions = auctionRepository.findAll();
@@ -223,11 +217,14 @@ String tagToSearch = searchingTag.split(" ")[0];
 List<AuctionEntity> listOfFilteredAuctions = listOfAllAuctions.stream()
         .filter(auction-> auction.getTitle().contains(tagToSearch)).filter(auction -> !county.isBlank() ? auction.getLocalization().getCounty().equals(county) : auction.getLocalization()!=null)
         .filter(auction-> !city.isBlank() ? auction.getLocalization().getCity().equals(city) : auction.getLocalization()!=null)
-        .filter(auction -> !category.isBlank() ? auction.getCategory().getName().equals(category) : auction.getCategory()!=null).collect(Collectors.toList());
+        .filter(auction -> !category.isBlank() ? auction.getCategory().getName().equals(category) : auction.getCategory()!=null)
+        .filter(auction -> auction.getTitle().contains(tagToSearch))
+        .collect(Collectors.toList());
 
-return listOfFilteredAuctions.stream().filter(auction -> auction.getTitle().contains(tagToSearch)).map(auction -> GetAuctionResponse.builder()
+
+return listOfFilteredAuctions.stream().map(auction -> GetAuctionResponseWithObserversAndLicytation.builder()
       .title(auction.getTitle())
-      .localization(auction.getLocalization())
+      .localization(mapper.map(auction.getLocalization(), GetLocalizationResponse.class))
       .pictures(mapToImageModel(auction.getPictures()))
       .user(mapper.map(auction.getUserEntity(), GetUserResponse.class))
       .description(auction.getDescription())
@@ -237,6 +234,46 @@ return listOfFilteredAuctions.stream().filter(auction -> auction.getTitle().cont
       .buyNowPrice(auction.getBuyNowPrice())
         .id(auction.getId())
         .isAcive(auction.isActive())
+        .observations(observationRepository.findAllByAuctionEntity(auction).stream()
+                .map(observation -> mapper.map(observation, AddObservationOfAuctionResponse.class))
+                .collect(Collectors.toList()))
+        .licytations(licytationsRepository.findAllByAuction(auction).stream().map(licytation -> mapper.map(licytation, GetLicytationsResponse.class)).collect(Collectors.toList()))
+        .loggedInUserSubscribedAuction(!userEmail.isBlank() && observationRepository.findAllByAuctionEntity(auction).stream().map(ObservationOfAuctionEntity::getUserEntity).anyMatch(user -> user.getEmailAddress().equals(userEmail)))
       .build()).collect(Collectors.toList());
+    }
+
+    public AddAuctionToObserveResponse addObservationOfAuction(AddAuctionToObserveRequest addAuctionToObserveRequest){
+        UserEntity user = usersRepository.findByEmailAddress(addAuctionToObserveRequest.getUserEmail()).orElseThrow(()->new AppException(AppErrorMessage.USER_DOES_NOT_EXISTS, addAuctionToObserveRequest.getUserEmail()));
+        AuctionEntity auction = auctionRepository.findById(addAuctionToObserveRequest.getAuctionId()).orElseThrow(()-> new RuntimeException("cant find auction"));
+        if(observationRepository.findByAuctionEntityAndUserEntity(auction, user).isEmpty()) {
+            ObservationOfAuctionEntity observation = new ObservationOfAuctionEntity();
+            observation.setAuctionEntity(auction);
+            observation.setUserEntity(user);
+            observationRepository.save(observation);
+        }
+        return AddAuctionToObserveResponse.builder().title(auction.getTitle()).userEmail(user.getEmailAddress()).build();
+    }
+
+    public AddLicytationResponse addLicytation (AddLicytationRequest addLicytationRequest){
+        AuctionEntity auctionEntity = auctionRepository.findById(addLicytationRequest.getId()).orElseThrow(()->new RuntimeException("cant find auction"));
+        UserEntity userEntity = usersRepository.findByEmailAddress(addLicytationRequest.getUserEmail()).orElseThrow(()-> new AppException(AppErrorMessage.USER_DOES_NOT_EXISTS, addLicytationRequest.getUserEmail()));
+        List<LicytationEntity> allLicytations = licytationsRepository.findAllByAuction(auctionEntity);
+        double maxValue=0;
+        for (LicytationEntity allLicytation : allLicytations) {
+            if (allLicytation.getPrice() > maxValue) {
+                maxValue = allLicytation.getPrice();
+            }
+        }
+        if (addLicytationRequest.getPrice()>maxValue) {
+            LicytationEntity licytation = new LicytationEntity();
+            licytation.setAuction(auctionEntity);
+            licytation.setUser(userEntity);
+            licytation.setPrice(addLicytationRequest.getPrice());
+            licytationsRepository.save(licytation);
+        }
+        else {
+            throw new RuntimeException("too low value");
+        }
+        return AddLicytationResponse.builder().message("licytation probably added").build();
     }
 }

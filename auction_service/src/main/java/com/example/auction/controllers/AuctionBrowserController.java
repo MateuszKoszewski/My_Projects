@@ -1,6 +1,7 @@
 package com.example.auction.controllers;
 
-import com.example.auction.model.dao.LocalizationEntity;
+import com.example.auction.model.dto.AddLicytationRequest;
+import com.example.auction.model.dto.AddLicytationResponse;
 import com.example.auction.model.dto.*;
 import com.example.auction.services.AuctionService;
 import com.example.auction.services.UserService;
@@ -86,9 +87,19 @@ return userService.registerUser(registerUserRequest);
     }
 
     @GetMapping("/auction")
-    public List<GetAuctionResponse> getAuctionsBySearchingTag (@RequestParam (value = "searchingTag") String searchingTag, @RequestParam(value="county") String county, @RequestParam(value="city") String city, @RequestParam(value="category") String category){
-    return auctionService.getAuctionsBySearchingTag(searchingTag, county, city, category);
+    public List<GetAuctionResponseWithObserversAndLicytation> getAuctionsBySearchingTag (@RequestParam (value = "searchingTag") String searchingTag, @RequestParam(value="county") String county, @RequestParam(value="city") String city, @RequestParam(value="category") String category, @RequestParam (value= "userEmail") String userEmail){
+    return auctionService.getAuctionsBySearchingTag(searchingTag, county, city, category, userEmail);
     }
 //    @GetMapping("/observation")
-//    public List<GetObservationsResponse> getObservationsByAuctions
+//    public GetObservationsResponse getObservationsByAuctions (@RequestParam (value = "userEmail") String userEmail, @RequestParam (value= "auctionId") Long auctionId){
+//    return auctionService.getObservationByAuction
+//    }
+    @PostMapping("/observe")
+    public AddAuctionToObserveResponse addObservationOfAuction (@RequestBody AddAuctionToObserveRequest addAuctionToObserveRequest){
+    return auctionService.addObservationOfAuction(addAuctionToObserveRequest);
+    }
+    @PostMapping("/licytation")
+    public AddLicytationResponse addLicytation(@RequestBody AddLicytationRequest addLicytationRequest){
+    return auctionService.addLicytation(addLicytationRequest);
+    }
 }
