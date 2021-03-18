@@ -1,0 +1,8 @@
+.ownerOfAuction{
+  font-weight: bold; 
+  color: blue;
+}
+.ownerOfAuction:hover{
+  color: purple;
+  cursor: pointer;
+}

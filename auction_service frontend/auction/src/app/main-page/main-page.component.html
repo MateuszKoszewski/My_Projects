@@ -3,27 +3,29 @@
 </div>
 
 <div style="margin: 20px;">
-  <form #searchinForm="ngForm" (ngSubmit)="onSubmit(searchinForm)">
+  <form>
 
     <mat-form-field style="position: relative; width: 400px !important;">
       <mat-label>Wyszukaj: </mat-label>
-      <input matInput type="text" minlength=4 name="searchingTag" ngModel required>
+      <input matInput type="text" minlength=4 name="searchingTag" ngModel required #searchingTag>
       <mat-hint>minimum 4 znaki</mat-hint>
     </mat-form-field>
 
     <mat-form-field style="position: relative; left: 70px;">
       <mat-label>województwo: </mat-label>
-      <mat-select #firstOption name="county" ngModel>
-        <mat-option [(value)]="arrayOfCounties[i]" *ngFor="let county of arrayOfCounties; let i = index">
+      <mat-select #firstOption name="county" ngModel (click)="resetValue(firstOption)">
+        <mat-option [(value)]="arrayOfCounties[i]" *ngFor="let county of arrayOfCounties; let i = index" #county
+          (click)="checkCounty(county)">
           {{county}}
         </mat-option>
+        <!-- <mat-option>none</mat-option> -->
       </mat-select>
     </mat-form-field>
 
 
     <mat-form-field style="position: relative; left: 120px;">
       <mat-label>miasto: </mat-label>
-      <mat-select name="city" ngModel (click)="showCities()">
+      <mat-select #cityOption name="city" ngModel (click)="showCities()" (click)="resetValue(cityOption)">
         <mat-option [(value)]="arrayOfCities[i]" *ngFor="let city of arrayOfCities; let i = index">
           {{city}}
         </mat-option>
@@ -32,18 +34,22 @@
 
     <mat-form-field style="position: relative; left: 200px;">
       <mat-label>Kategorie: </mat-label>
-      <mat-select name="category" ngModel>
+      <mat-select #categoryOption name="category" ngModel (click)="resetValue(categoryOption)">
         <mat-option [(value)]="arrayOfCategories[i]" *ngFor="let category of arrayOfCategories; let i = index">
           {{category}}
         </mat-option>
       </mat-select>
     </mat-form-field>
     <div>
-      <button mat-raised-button type="submit" style="position: relative; top:20px">Szukaj!</button>
+      <button mat-raised-button type="button" style="position: relative; top:20px"
+        (click)="getResult()">Szukaj!</button>
+      <button mat-raised-button type="button" style="position: relative; top:20px; left:10px"
+        (click)="hideSearchingResult()">wyczyść wyniki
+        wyszukiwania </button>
+
     </div>
   </form>
 </div>
-
 <div class="kategorie">
   <div>Kategorie</div>
   <!-- <button (click)="click()">button</button> -->
@@ -51,16 +57,15 @@
     class="category">
     {{cat}} </span>
 </div>
-<div *ngFor="let auction of arrayOfAuctions; let i=index" [attr.data-index]="i">
 
-  <app-single-auction *ngIf="displaySearchedAuctions" style="margin: 5px; position: relative; top: 50px;"
-    [auction]="arrayOfAuctions[i]">
-  </app-single-auction>
+<div *ngIf="showSearchingResult">
+  <div *ngFor="let auction of arrayOfAuctions; let i=index" [attr.data-index]="i">
 
+    <app-single-auction style="margin: 5px; position: relative; top: 50px;" [auction]="arrayOfAuctions[i]">
+    </app-single-auction>
+
+  </div>
 </div>
 <div class="promotion">
   Ogłoszenie promowane w {{localization}}
-</div>
-<div>
-  <button type="button" (click)="kliknij()">button</button>
 </div>

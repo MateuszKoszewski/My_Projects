@@ -1,1 +1,71 @@
-<p>display-auction works!</p>
+<div class="main">
+  <div style="position: relative; width: 100%; height: 60px; top:40px; background-color: #e2e2e2; text-align: center;">
+    <header style="text-align: center; position: relative; top:15px; font-family: sans-serif; font-size: 40px;">
+      {{auctionTitle}}
+    </header>
+    <div class="alongToHeaders" style="position: absolute; left: 950px; top:10px;">
+      <span>aukcja wystawiona przez</span><span class="ownerOfAuction">
+        {{auctionOwner}}</span><br>
+      <span>obserwowana przez </span><span>{{numberOfObservers}}</span><span> użytkowników</span>
+    </div>
+  </div>
+  <div class="description" style="position: absolute; width: 300px; left:450px; top:150px;">
+    <span>Lokalizacja: </span><span>{{localizationCity}}</span><span>,
+      województwo:
+    </span><span>{{localizationCounty}}</span><br>
+    <span> do zakończenia pozostało:
+    </span><span>{{differenceInTime}} </span>
+
+    <div style="position: relative; font-weight: bold;">Opis:</div>
+    <div style="background-color: #e2e2e2; width: 400px;">{{description}} </div>
+    <div *ngIf="auctionFinished" style="position: relative;  width: 300px; height: 200px; top:100px; left:50px">
+      <header
+        style=" position: relative; font-size: 30px; font-family: cursive; font-weight: bold; text-align: center; line-height: 50px;">
+        Gratulacje
+        !!! Wygrałeś
+        aukcję.</header>
+    </div>
+  </div>
+  <div class="buttons" style="position: absolute; left:980px; top:200px; width:200px;">
+    <button mat-raised-button *ngIf="displayBuyNowButton" style="position: absolute; right:90px;" (click)="buyNow()">Kup
+      Teraz za
+      {{buyNowPrice}}
+      zł!</button>
+    <button mat-raised-button *ngIf="displayLicytationButton" style="position: absolute; left: 120px;"
+      (click)="klik()">Lictuj!</button>
+    <button mat-fab class="observe" style="position: absolute; top:50px; right:10px;" *ngIf="displaySubscribeButton"
+      (click)="addToObservable()">Obserwuj</button>
+  </div>
+
+  <div style="position: absolute; left: 950px; top: 150px;">
+    <span>aktualnca cena: </span><span style="font-weight: bold; color: blue;">{{actualPrice}}</span><span> zł
+    </span> <br>
+    <div *ngIf="lastLicytationOwner">
+      <span>ostatnia oferta użytkownika: </span> <span style="font-weight: bold; color: blue;">
+        {{lastLicytationOwner}}</span><br>
+    </div>
+  </div>
+  <div *ngIf="displayLicytationMenu"
+    style="position: absolute; width:200px; height: 200px; background-color: #e2e2e2; left:980px; top: 320px;">
+    <mat-form-field style="position: relative; left:5px;">
+      <mat-label>Twoja oferta: </mat-label>
+      <input matInput size="100px" type="number" id="price" name="price" #input>
+      <mat-hint>poda kwotę w zł</mat-hint>
+    </mat-form-field>
+    <button mat-raised-button style="position: relative; left: 50px; top:30px;" (click)="addLicytation()"
+      [disabled]="!loggedIn">zatwierdź</button>
+    <span
+      style="position: absolute; right:0px; top:150px; text-align: center; font-family: cursive; font-weight: bold;">{{licytationMessage}}
+    </span>
+  </div>
+
+  <div class="images" style="position: relative; top:50px; width: 400px; height: auto; margin: 10px;">
+
+
+    <div *ngFor="let image of arrayOfImages; let i=index" style="position: relative; margin: 10px;">
+      <img [src]="arrayOfImages[i]" width="350px" height="220px" class="image" style="position: relative;"
+        (click)="moveToImage()">
+    </div>
+
+  </div>
+</div>

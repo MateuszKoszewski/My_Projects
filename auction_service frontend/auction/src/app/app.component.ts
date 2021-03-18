@@ -20,6 +20,7 @@ export class AppComponent {
       console.log(this.loggedInUser)
       logginInService.getAuth(this.loggedInUser.emailAddress, this.loggedInUser.password)
       console.log(this.loggedInUser)
+      this.displayNotifications = true;
     }
 
     // if (sessionStorage.getItem('userLogin') != null && sessionStorage.getItem('userPassword') != null) {
@@ -33,9 +34,11 @@ export class AppComponent {
     console.log(globalService.loggedInUser)
   }
 
+  numberOfNotifications: number
   loggedInUser: UserEntity
   displayAdminPanel: boolean
   title = 'auction';
+  displayNotifications
   selectRouter(event: any) {
     console.log(event)
   }
@@ -49,6 +52,24 @@ export class AppComponent {
     }
   }
   logOut() {
+    this.loggedInUser = null;
     this.globalService.logOut();
+    this.displayNotifications = false;
+  }
+  downloadNotifications() {
+    console.log(this.loggedInUser)
+    if (this.globalService.loggedInUser != null) {
+      this.loggedInUser = this.globalService.loggedInUser;
+      this.globalService.getNotifications().subscribe(data => {
+        console.log(data)
+        this.numberOfNotifications = data.length;
+        if (this.numberOfNotifications == 0) {
+          this.displayNotifications = false;
+        }
+        else {
+          this.displayNotifications = true;
+        }
+      })
+    }
   }
 }

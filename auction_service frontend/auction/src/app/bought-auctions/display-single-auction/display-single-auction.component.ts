@@ -1,8 +1,6 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { MyAuctionsService } from '../my-auctions.service';
-
-
+import { BoughtService } from '../bought.service';
 
 @Component({
   selector: 'app-display-single-auction',
@@ -11,9 +9,11 @@ import { MyAuctionsService } from '../my-auctions.service';
 })
 export class DisplaySingleAuctionComponent implements OnInit {
 
-  constructor(private sanitizer: DomSanitizer, private service: MyAuctionsService) { }
+  constructor(private sanitizer: DomSanitizer, private service: BoughtService) { }
 
   @Input() auction: any
+  @Input() price: number
+  @Input() dateOfClosing: String;
 
   localizationCity: String;
   mainImage: any;
@@ -26,6 +26,7 @@ export class DisplaySingleAuctionComponent implements OnInit {
   numberOfObservers;
   lastLicytationOwner;
   timeToFinish: String;
+
   ngOnInit(): void {
 
 
@@ -55,4 +56,3 @@ export class DisplaySingleAuctionComponent implements OnInit {
 
 
 }
-

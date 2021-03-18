@@ -12,13 +12,16 @@ import { AdminPanelModule } from './admin-panel/admin-panel.module';
 import { UserRegisterModule } from './user-register/user-register.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialsModule } from './materials/materials.module';
-import { MyAuctionsComponent } from './my-auctions/my-auctions.component';
 import { MyAuctionsModule } from './my-auctions/my-auctions.module';
+import { GlobalService } from './global.service';
+import { NotificationsModule } from './notifications/notifications.module';
+import { BoughtAuctionsModule } from './bought-auctions/bought-auctions.module';
+
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,13 +35,15 @@ import { MyAuctionsModule } from './my-auctions/my-auctions.module';
     AdminPanelModule,
     BrowserAnimationsModule,
     MaterialsModule,
-    MyAuctionsModule
+    MyAuctionsModule,
+    NotificationsModule,
+    BoughtAuctionsModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptorService,
     multi: true
-  }],
+  }, GlobalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

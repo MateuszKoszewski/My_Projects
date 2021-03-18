@@ -12,8 +12,11 @@ export class MyAuctionsService {
 
 
 
-  getAuctions(userEmail: String): Observable<any> {
-    return this.http.get(`http://localhost:8080/auctions/${userEmail}`);
+  getAuctions(userEmail: String, isActive: boolean): Observable<any> {
+    return this.http.get(`http://localhost:8080/auctions/${userEmail}/${isActive}`);
+  }
+  getAuctionById(auctionId: number): Observable<any> {
+    return this.http.get(`http://localhost:8080/auction/${auctionId}`)
   }
 
 

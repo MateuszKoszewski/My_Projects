@@ -26,9 +26,9 @@
     <div>
       <mat-form-field>
         <mat-label>Opis: </mat-label>
-        <textarea matInput maxlength=500; #description ngModel name="description"></textarea>
+        <textarea matInput maxlength=1000; #description ngModel name="description"></textarea>
         <mat-hint align="start"></mat-hint>
-        <mat-hint align="end">{{description.value.length}}/100</mat-hint>
+        <mat-hint align="end">{{description.value.length}}/1000</mat-hint>
       </mat-form-field>
     </div>
     <button type="button" (click)="shouldDisplaySomething()">display</button>

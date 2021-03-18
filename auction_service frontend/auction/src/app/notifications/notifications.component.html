@@ -1,0 +1,11 @@
+<div style="text-align: center; background-color: #e2e2e2; font-size: 40px; font-family: cursive; font-weight: bold; 
+height: 60px; position: relative;">
+  <header style="position:relative; top:20px;">
+    Twoje powiadomienia</header>
+</div>
+<div style="position: relative; width:700px; left: 20%; ">
+  <div *ngFor="let notification of notificationsArray"
+    style="margin: 50px; font-size: 15px; font-family: cursive; text-align: center;">
+    {{notification.message}}</div>
+
+</div>

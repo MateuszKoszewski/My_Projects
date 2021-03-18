@@ -8,6 +8,7 @@ import { MaterialsModule } from '../materials/materials.module';
 import { SingleAuctionComponent } from './single-auction/single-auction.component';
 import { DisplayAuctionComponent } from './display-auction/display-auction.component';
 
+
 @NgModule({
   declarations: [MainPageComponent, SingleAuctionComponent, DisplayAuctionComponent],
   imports: [

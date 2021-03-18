@@ -10,11 +10,13 @@ import { MatMenuModule } from '@angular/material/menu'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { MatSelectModule } from '@angular/material/select'
+import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { MatDialogModule } from '@angular/material/dialog'
 
 
 
 const MaterialComponents = [
-  MatButtonModule, MatIconModule, MatButtonToggleModule, MatProgressSpinnerModule, MatToolbarModule, MatSidenavModule, MatBadgeModule, MatMenuModule, MatFormFieldModule, MatInputModule, MatSelectModule
+  MatButtonModule, MatIconModule, MatButtonToggleModule, MatProgressSpinnerModule, MatToolbarModule, MatSidenavModule, MatBadgeModule, MatMenuModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatSnackBarModule, MatDialogModule
 ]
 
 @NgModule({

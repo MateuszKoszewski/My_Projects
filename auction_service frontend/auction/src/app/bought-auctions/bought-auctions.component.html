@@ -1,0 +1,10 @@
+<header *ngIf="!displayNoAuctionsMessage" class="header">{{userName}} <br><br> kupione
+  przez Ciebie aukcje:</header>
+
+<header *ngIf="displayNoAuctionsMessage" class="header">Niestety nie wygrałeś jeszcze żadnych auckji</header>
+
+<div *ngFor="let auction of arrayOfAllAuctions; let i=index" [attr.data-index]="i">
+  <app-display-single-auction *ngIf="displayLittleAuction" [auction]="arrayOfAllAuctions[i]" [price]="finalPrices[i]"
+    [dateOfClosing]="datesOfFinish[i]" style="margin: 10px">
+  </app-display-single-auction>
+</div>

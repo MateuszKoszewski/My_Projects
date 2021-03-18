@@ -4,10 +4,13 @@
     <button routerLink="/logg" mat-menu-item>zaloguj</button>
     <button routerLink="/addauction" mat-menu-item>dodaj aukcję</button>
     <button routerLink="/myAuctions" mat-menu-item>moje aukcje</button>
+    <button routerLink="/boughtAuctions" mat-menu-item>kupione</button>
+    <button routerLink="/notifications" mat-menu-item *ngIf="displayNotifications"><span
+        matBadge={{numberOfNotifications}} matBadgeSize="small">powiadomienia</span></button>
     <button mat-menu-item (click)="logOut()">wyloguj</button>
   </mat-menu>
 
-  <button mat-flat-button [matMenuTriggerFor]="userPanel" class="button">panel
+  <button mat-flat-button [matMenuTriggerFor]="userPanel" class="button" (click)="downloadNotifications()">panel
     użytkownika</button>
   <mat-menu #adminPanel="matMenu">
     <button routerLink="/admin" mat-menu-item>dodaj kategorię</button>

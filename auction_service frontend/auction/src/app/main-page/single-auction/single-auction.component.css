@@ -19,12 +19,14 @@
   position: relative;
   float: left;
   font-style: italic;
+  bottom: 10px;
 
 }
 .additionalDataRouting{
   position: relative;
   float: left;
   font-style: italic;
+  bottom: 10px;
 }
 .additionalDataRouting:hover{
   position: relative;

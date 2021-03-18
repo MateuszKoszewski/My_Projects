@@ -77,7 +77,7 @@ export class AddAuctionComponent implements OnInit {
     console.log(this.globalService.loggedInUser)
     console.log("this " + this.loggedInUser)
 
-
+    this.globalService.getNotifications().subscribe(data => console.log(data))
   }
 
   import(takenValue: any, el) {

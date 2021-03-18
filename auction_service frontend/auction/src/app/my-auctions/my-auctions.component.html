@@ -1,6 +1,6 @@
 <header *ngIf="!displayNoAuctionsMessage" class="header">{{userName}} <br><br> wystawione
   przez Ciebie aukcje:</header>
-<button type="button" (click)="showArray()">button in parent</button>
+
 <header *ngIf="displayNoAuctionsMessage" class="header">Niestety nie wystawiłeś jeszcze żadnych auckji</header>
 <!-- <app-display-single-auction *ngIf="displayLittleAuction" [auction]="arrayOfAllAuctions[0]"></app-display-single-auction> -->
 <div *ngFor="let auction of arrayOfAllAuctions; let i=index" [attr.data-index]="i">
