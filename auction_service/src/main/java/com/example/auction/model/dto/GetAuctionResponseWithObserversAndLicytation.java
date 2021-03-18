@@ -3,7 +3,7 @@ package com.example.auction.model.dto;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -16,13 +16,14 @@ public class GetAuctionResponseWithObserversAndLicytation {
     private List<ImageModel> pictures;
     private double minPrice;
     private double buyNowPrice;
-    private LocalDate dateOfStart;
-    private LocalDate dateOfFinish;
+    private String dateOfStart;
+    private String dateOfFinish;
     private GetLocalizationResponse localization;
     private GetUserResponse user;
-    private boolean isAcive;
-    private List<AddObservationOfAuctionResponse> observations;
+    private boolean isActive;
+    private List<GetObservationOfAuctionResponse> observations;
     private List<GetLicytationsResponse> licytations;
     private boolean loggedInUserSubscribedAuction;
+    private String duration;
 
 }

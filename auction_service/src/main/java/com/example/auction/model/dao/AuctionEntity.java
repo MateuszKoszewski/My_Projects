@@ -5,6 +5,7 @@ import lombok.Getter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -38,9 +39,9 @@ public class AuctionEntity {
     @OneToOne(cascade = {CascadeType.ALL})
     private LocalizationEntity localization;
 
-    private LocalDate dateOfStart;
+    private LocalDateTime dateOfStart;
 
-    private LocalDate dateOfFinish;
+    private LocalDateTime dateOfFinish;
 
     private int amountOfVisits;
 

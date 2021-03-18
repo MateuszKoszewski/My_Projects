@@ -1,5 +1,6 @@
 package com.example.auction.controllers;
 
+import com.example.auction.model.dao.NotificationEntity;
 import com.example.auction.model.dto.AddLicytationRequest;
 import com.example.auction.model.dto.AddLicytationResponse;
 import com.example.auction.model.dto.*;
@@ -34,32 +35,22 @@ public class AuctionBrowserController {
 }
 
 
-@CrossOrigin(origins = "http://localhost:4200")
+
     @GetMapping("/log")
     public String login(){
         return "authenticated succesfully";
     }
 
-    @PostMapping("/image/upload")
-    public ResponseEntity<String> uploadImage(@RequestParam ("imageFile") MultipartFile file) throws IOException {
-        auctionService.saveImage(file);
-        return ResponseEntity.status(HttpStatus.OK).body(null);
-    }
+//    @PostMapping("/image/upload")
+//    public ResponseEntity<String> uploadImage(@RequestParam ("imageFile") MultipartFile file) throws IOException {
+//        auctionService.saveImage(file);
+//        return ResponseEntity.status(HttpStatus.OK).body(null);
+//    }
 
 
     @PostMapping("/user")
     public RegisterUserResponse registerUser (@RequestBody RegisterUserRequest registerUserRequest){
 return userService.registerUser(registerUserRequest);
-    }
-
-    @PostMapping("/admin/category")
-    public AddCategoryResponse addCategory (@RequestBody AddCategoryRequest addCategoryRequest){
-    return auctionService.addCategory(addCategoryRequest);
-    }
-
-    @GetMapping("/category")
-    public List<GetCategoriesResponse> getCategories (){
-    return auctionService.getCategories();
     }
 
     @GetMapping("/user/{userEmail}")
@@ -76,9 +67,9 @@ return userService.registerUser(registerUserRequest);
 //    public String addAuction (@RequestParam ("auction") String auction){
 //        return auctionService.addAuction(auction);
 //    }
-    @GetMapping("/auctions/{userEmail}")
-    public List<GetAuctionResponse> getAuctions (@PathVariable (name="userEmail") String userEmail){
-    return auctionService.getAuctionsByUser(userEmail);
+    @GetMapping("/auctions/{userEmail}/{active}")
+    public List<GetAuctionResponse> getAuctions (@PathVariable (name="userEmail") String userEmail, @PathVariable (name="active") boolean isActive){
+    return auctionService.getAuctionsByUser(userEmail, isActive);
     }
 
     @GetMapping("/localization")
@@ -102,4 +93,25 @@ return userService.registerUser(registerUserRequest);
     public AddLicytationResponse addLicytation(@RequestBody AddLicytationRequest addLicytationRequest){
     return auctionService.addLicytation(addLicytationRequest);
     }
+    @GetMapping("/auction/{auctionId}")
+    public GetAuctionResponseWithObserversAndLicytation getAuctionById (@PathVariable (name="auctionId") Long auctionId){
+    return auctionService.getAuctionById(auctionId);
+    }
+    @GetMapping("/notifications/{userEmail}")
+    public List<GetNotificationsResponse> getNotifications (@PathVariable (name="userEmail") String userEmail){
+    return auctionService.getNotifications(userEmail);
+    }
+    @DeleteMapping("/notifications/{userEmail}")
+    public void deleteNotifications (@PathVariable (name="userEmail") String userEmail){
+        auctionService.deleteNotifications(userEmail);
+    }
+    @PostMapping("/buyauction")
+    public AddPurchaseResponse addPurchaseBuyNowPrice (@RequestBody AddPurchaseRequest addPurchaseRequest){
+    return auctionService.addPurchaseBuyNowPrice(addPurchaseRequest);
+    }
+    @GetMapping("/auction/bought/{userEmail}")
+    public List<GetPurchaseResponse> getBoughtAuctionsOfUser(@PathVariable (name="userEmail") String userEmail){
+    return auctionService.getBoughtAuctionsOfUser (userEmail);
+    }
+
 }

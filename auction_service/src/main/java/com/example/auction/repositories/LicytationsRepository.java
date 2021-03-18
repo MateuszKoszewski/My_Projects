@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface LicytationsRepository extends JpaRepository <LicytationEntity, Long> {
 List<LicytationEntity> findAllByAuction(AuctionEntity auction);
+
 }

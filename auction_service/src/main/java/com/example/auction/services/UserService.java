@@ -12,6 +12,7 @@ import com.example.auction.repositories.AuthoritiesRepository;
 import com.example.auction.repositories.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,9 +53,19 @@ public class UserService {
         }
         return RegisterUserResponse.builder().emailAddress(registerUserRequest.getEmailAddress()).message("user registered").build();
     }
-    public GetUserResponse getUser (String userEmail){
-        UserEntity foundedUser = usersRepository.findByEmailAddress(userEmail).orElseThrow(()->new AppException(AppErrorMessage.USER_DOES_NOT_EXISTS, userEmail));
+
+    public GetUserResponse getUser(String userEmail) {
+        UserEntity foundedUser = usersRepository.findByEmailAddress(userEmail).orElseThrow(() -> new AppException(AppErrorMessage.USER_DOES_NOT_EXISTS, userEmail));
         ModelMapper mapper = new ModelMapper();
         return mapper.map(foundedUser, GetUserResponse.class);
+    }
+
+    public UserEntity getUserByEmailAddress(String emailAddress) {
+        return usersRepository.findByEmailAddress(emailAddress).orElseThrow(() -> new AppException(AppErrorMessage.USER_DOES_NOT_EXISTS, emailAddress));
+    }
+
+    public GetUserResponse mapUserEntityToGetUserResponse(UserEntity userEntity) {
+        ModelMapper mapper = new ModelMapper();
+        return mapper.map(userEntity, GetUserResponse.class);
     }
 }

@@ -1,10 +1,14 @@
 package com.example.auction.model.dao;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table (name = "purchase")
+@Data
 public class PurchaseEntity {
 
     @Id
@@ -19,7 +23,7 @@ public class PurchaseEntity {
 
     private double price;
 
-    private LocalDate date;
+    private LocalDateTime date;
 
 
 }
