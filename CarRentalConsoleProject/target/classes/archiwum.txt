@@ -1,0 +1,7 @@
+Car: Toyota Corolla GKA18456 2005 140.0 220000
+Car: Honda Civic GD1567R 2007 110.0 205670
+Car: Renault Laguna GDA145654 2009 125.0 201690
+Car: Skoda Fabia GD208RU 2018 200.0 53678
+User: Jan Kowalski 75051403846
+User: Zbigniew Nowak 87122400913
+Transactions: Jan Kowalski 75051403846 Volkswagen Passat GA105WC 2010 150.0 178765 1 2020-12-30 2020-12-31

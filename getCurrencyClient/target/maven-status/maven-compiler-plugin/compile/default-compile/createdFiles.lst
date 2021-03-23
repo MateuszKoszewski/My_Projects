@@ -1,0 +1,15 @@
+currencyCalculator\fx\ExchangePanelUtils\ButtonVBox.class
+currencyCalculator\database\ExchangeEntity.class
+currencyCalculator\service\CurrencyService.class
+currencyCalculator\externalapi\CalculatorResponsePeriod.class
+currencyCalculator\view\console\Main.class
+currencyCalculator\service\Exchange.class
+currencyCalculator\fx\HelloWorld.class
+currencyCalculator\fx\ExchangePanelUtils\TextFieldVBox.class
+currencyCalculator\database\DatabaseDaoHibernateImpl.class
+currencyCalculator\externalapi\CalculatorResponse.class
+currencyCalculator\fx\ExchangePanelUtils\LabelVBox.class
+currencyCalculator\database\DatabaseDao.class
+currencyCalculator\externalapi\CalculatorHttpClient.class
+currencyCalculator\service\ExchangePeriod.class
+currencyCalculator\fx\ExchangePanel.class
