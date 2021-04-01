@@ -102,12 +102,11 @@ public class AuctionService {
     }
 
 
-    public List<GetAuctionResponse> getAuctionsByUser(String userEmail, boolean isActive) {
+    public List<GetAuctionResponse> getAuctionsByUser(String userEmail) {
 
         UserEntity userEntity = userService.getUserByEmailAddress(userEmail);
-        List<AuctionEntity> listOfAuctionsByUser = auctionRepository.findByUserEntity(userEntity);
-        List<AuctionEntity> listOfAuctionsFilteredByActive = listOfAuctionsByUser.stream().filter(auctionEntity -> auctionEntity.isActive() == isActive).collect(Collectors.toList());
-        return listOfAuctionsFilteredByActive.stream().map(this::mapAuctionEntityToGetAuctionResponse).collect(Collectors.toList());
+        List<AuctionEntity> listOfActiveAuctionsByUser = auctionRepository.findAllByIsActiveIsTrueAndUserEntity(userEntity);
+        return listOfActiveAuctionsByUser.stream().map(auctionEntity -> mapAuctionEntityToGetAuctionResponse(auctionEntity)).collect(Collectors.toList());
 
     }
 
@@ -261,9 +260,8 @@ public class AuctionService {
         UserEntity userOfLastLicytation = licytationService.getLastLicytationOfAuction(auctionEntity).getUser();
         if (userOfLastLicytation != null) {
             return notificationService.createNotificationForBeingOverlicytated(userOfLastLicytation, auctionEntity, licytationEntity);
-        } else {
-            return null;
         }
+        return null;
     }
 
 

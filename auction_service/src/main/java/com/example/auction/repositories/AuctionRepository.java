@@ -13,5 +13,6 @@ public interface AuctionRepository extends JpaRepository<AuctionEntity, Long> {
 
     List<AuctionEntity> findByUserEntity (UserEntity user);
     Optional<AuctionEntity> findById(Long id);
+    List<AuctionEntity> findAllByIsActiveIsTrueAndUserEntity(UserEntity userEntity);
 
 }

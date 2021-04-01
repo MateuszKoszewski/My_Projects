@@ -12,7 +12,6 @@ import com.example.auction.repositories.AuthoritiesRepository;
 import com.example.auction.repositories.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

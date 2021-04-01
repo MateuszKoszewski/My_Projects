@@ -1,9 +1,11 @@
 package com.example.auction.model.dto;
 
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+
+@Data
 public class RegisterAddressRequest {
+
 
     private String county;
 

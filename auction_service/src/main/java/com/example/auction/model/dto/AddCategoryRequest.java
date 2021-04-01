@@ -1,10 +1,14 @@
 package com.example.auction.model.dto;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class AddCategoryRequest {
 
     private String name;
-//    private String description;
+
 }
