@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -55,44 +56,40 @@ public class AuctionService {
     }
 
 
-    public String addAuction(List<MultipartFile> file, String auction) {
 
+
+
+    public AddAuctionResponse addAuction(List<MultipartFile> file, AddAuctionRequest addAuctionRequest) {
+ModelMapper mapper = new ModelMapper();
         String directory = "src/main/resources/images/filesAddedAt" + LocalDate.now();
+
         imagesService.uploadFiles(file, directory);
         List<ImageEntity> imageEntityList = imagesService.getImageEntityList(file, directory);
         imagesService.addImagesEntityDataToDb(imageEntityList);
-        AddAuctionResponse addAuctionResponse = null;
-        try {
-            addAuctionResponse = new ObjectMapper().readValue(auction, AddAuctionResponse.class);
 
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-        if (addAuctionResponse != null) {
-            AuctionEntity auctionEntity = prepareAuctionEntityToSave(addAuctionResponse, imageEntityList);
+            AuctionEntity auctionEntity = prepareAuctionEntityToSave(addAuctionRequest, imageEntityList);
             auctionRepository.save(auctionEntity);
-            UserEntity userEntity = userService.getUserByEmailAddress(addAuctionResponse.getEmailAddress());
-            NotificationEntity notificationEntity = notificationService.CreateNotificationForAddingAuctions(userEntity, addAuctionResponse.getTitle());
+            UserEntity userEntity = userService.getUserByEmailAddress(addAuctionRequest.getEmailAddress());
+            NotificationEntity notificationEntity = notificationService.CreateNotificationForAddingAuctions(userEntity, addAuctionRequest.getTitle());
             notificationService.saveNotificationToDB(notificationEntity);
-        }
-        return auction;
+
+        return mapper.map(addAuctionRequest, AddAuctionResponse.class);
     }
 
-    private AuctionEntity prepareAuctionEntityToSave(AddAuctionResponse addAuctionResponse, List<ImageEntity> imageEntityList) {
-        CategoryEntity categoryEntity = categoryService.getCategoryEntityFromDB(addAuctionResponse.getCategory());
-        UserEntity userEntity = userService.getUserByEmailAddress(addAuctionResponse.getEmailAddress());
+    private AuctionEntity prepareAuctionEntityToSave(AddAuctionRequest addAuctionRequest, List<ImageEntity> imageEntityList) {
+        CategoryEntity categoryEntity = categoryService.getCategoryEntityFromDB(addAuctionRequest.getCategory());
+        UserEntity userEntity = userService.getUserByEmailAddress(addAuctionRequest.getEmailAddress());
         LocalizationEntity localizationEntity = new LocalizationEntity();
-        localizationEntity.setCounty(addAuctionResponse.getAddress().getCounty());
-        localizationEntity.setCity(addAuctionResponse.getAddress().getCity());
+        localizationEntity.setCounty(addAuctionRequest.getAddress().getCounty());
+        localizationEntity.setCity(addAuctionRequest.getAddress().getCity());
         AuctionEntity auctionEntity = new AuctionEntity();
-        auctionEntity.setTitle(addAuctionResponse.getTitle());
-        auctionEntity.setDescription(addAuctionResponse.getDescription());
+        auctionEntity.setTitle(addAuctionRequest.getTitle());
+        auctionEntity.setDescription(addAuctionRequest.getDescription());
         auctionEntity.setPictures(imageEntityList);
         auctionEntity.setCategory(categoryEntity);
-        auctionEntity.setMinPrice(addAuctionResponse.getMinPrice());
-        auctionEntity.setBuyNowPrice(addAuctionResponse.getBuyNowPrice());
-        auctionEntity.setPromoted(addAuctionResponse.isPromoted());
+        auctionEntity.setMinPrice(addAuctionRequest.getMinPrice());
+        auctionEntity.setBuyNowPrice(addAuctionRequest.getBuyNowPrice());
+        auctionEntity.setPromoted(addAuctionRequest.isPromoted());
         auctionEntity.setLocalization(localizationEntity);
         auctionEntity.setDateOfStart(LocalDateTime.now());
         auctionEntity.setDateOfFinish(LocalDateTime.now().plusDays(14));
@@ -303,10 +300,10 @@ public class AuctionService {
         return "error";
     }
 
-    private String mapLocalDateTimeToString(LocalDateTime localDateTime){
+    private String mapLocalDateTimeToString(LocalDateTime localDateTime) {
         LocalDateTime dateWithoutSecondsAndNanos = localDateTime.withSecond(0).withNano(0);
         String[] arrayOfDateParts = dateWithoutSecondsAndNanos.toString().split("T");
-        return arrayOfDateParts[0]+ " " + arrayOfDateParts[1];
+        return arrayOfDateParts[0] + " " + arrayOfDateParts[1];
     }
 
     public List<GetNotificationsResponse> getNotifications(String userEmail) {

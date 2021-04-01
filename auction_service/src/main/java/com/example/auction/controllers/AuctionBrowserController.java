@@ -7,6 +7,7 @@ import com.example.auction.model.dto.*;
 import com.example.auction.services.AuctionService;
 import com.example.auction.services.UserService;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
@@ -42,22 +43,13 @@ public class AuctionBrowserController {
     }
 
 
-//    @PostMapping("/user")
-//    public RegisterUserResponse registerUser(@RequestBody RegisterUserRequest registerUserRequest) {
-//        return userService.registerUser(registerUserRequest);
-//    }
-//
-//    @GetMapping("/user/{userEmail}")
-//    public GetUserResponse getUser(@PathVariable(name = "userEmail") String userEmail) {
-//        return userService.getUser(userEmail);
-//    }
 
     @PostMapping("/auction")
-    public String addAuction(@RequestParam("imageFile") List<MultipartFile> file, @RequestParam("auction") String auction) {
+    public AddAuctionResponse addAuction( @RequestPart(value = "imageFile", required = false) List<MultipartFile> file, @RequestPart("auction") AddAuctionRequest auction) {
         return auctionService.addAuction(file, auction);
     }
 
-    @GetMapping("/auctions/{userEmail}/{active}")
+    @GetMapping("/auctions/{userEmail}")
     public List<GetAuctionResponse> getAuctions(@PathVariable(name = "userEmail") String userEmail) {
         return auctionService.getAuctionsByUser(userEmail);
     }

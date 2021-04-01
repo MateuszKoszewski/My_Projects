@@ -71,7 +71,9 @@ export class MainPageComponent implements OnInit {
   sendData() {
 
   }
-
+  isChanging() {
+    console.log(this.tagSelected.value)
+  }
 
   getResult() {
     if (this.tagSelected.value == undefined) {

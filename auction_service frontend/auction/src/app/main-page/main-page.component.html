@@ -7,7 +7,8 @@
 
     <mat-form-field style="position: relative; width: 400px !important;">
       <mat-label>Wyszukaj: </mat-label>
-      <input matInput type="text" minlength=4 name="searchingTag" ngModel required #searchingTag>
+      <input matInput type="text" minlength=4 name="searchingTag" ngModel required #searchingTag
+        (change)="isChanging()">
       <mat-hint>minimum 4 znaki</mat-hint>
     </mat-form-field>
 

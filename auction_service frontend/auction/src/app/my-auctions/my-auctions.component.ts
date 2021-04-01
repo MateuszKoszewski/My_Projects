@@ -20,7 +20,7 @@ export class MyAuctionsComponent implements OnInit {
   displayNoAuctionsMessage = false;
 
   ngOnInit(): void {
-    this.service.getAuctions(this.globalService.loggedInUser.emailAddress, true).subscribe(result => {
+    this.service.getAuctions(this.globalService.loggedInUser.emailAddress).subscribe(result => {
       this.arrayOfAllAuctions = result;
       console.log(this.arrayOfAllAuctions)
       if (this.arrayOfAllAuctions.length == 0) {

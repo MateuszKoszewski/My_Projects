@@ -147,10 +147,8 @@ export class AddAuctionComponent implements OnInit {
     console.log(form);
     this.auction = new AuctionEntity(form.value.title, form.value.category, form.value.description, form.value.minPrice, form.value.buyNowPrice, new LocalizationEntity(form.value.county, form.value.city), form.value.promoted, this.arrayOfImageNames, this.loggedInUser.emailAddress)
     let formData = new FormData;
-    let data = JSON.stringify(this.auction)
+    formData.append('auction', new Blob([JSON.stringify(this.auction)], { type: 'application/json' }));
 
-
-    formData.append('auction', data)
 
     for (let i = 0; i < this.array.length; i++) {
       formData.append('imageFile', this.array[i], this.array[i].name)
@@ -158,6 +156,7 @@ export class AddAuctionComponent implements OnInit {
 
     console.log(this.array)
     console.log(formData)
+
 
     this.service.addAuction(formData).subscribe(response => {
       console.log(response.status);
@@ -167,11 +166,11 @@ export class AddAuctionComponent implements OnInit {
         this.uploadMessage = 'Image not uploaded successfully';
       }
     });
-    // }
-    // else {
-    //   this.service.addAuction2(data).subscribe(response => console.log(response))
-    // }
   }
+  //     else {
+  //   this.service.addAuction2(data).subscribe(response => console.log(response))
+  // }
+  //   }
 
 
 

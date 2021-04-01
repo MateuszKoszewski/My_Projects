@@ -18,6 +18,7 @@ public class ImagesService {
     private final ImagesRepository imagesRepository;
 
     public void uploadFiles(List<MultipartFile> listOfFiles, String directory) {
+
         for (int i = 0; i < listOfFiles.size(); i++) {
             String fileName = listOfFiles.get(i).getOriginalFilename();
             try {
@@ -27,6 +28,7 @@ public class ImagesService {
                 e.printStackTrace();
             }
         }
+
     }
 
     private ImageEntity getImageEntityFromFile(MultipartFile file, boolean isMainImage, String directory) {
