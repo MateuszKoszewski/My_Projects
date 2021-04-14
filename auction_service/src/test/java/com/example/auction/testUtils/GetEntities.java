@@ -67,4 +67,21 @@ public class GetEntities {
         auctionEntity.setDateOfStart(LocalDateTime.now());
         return auctionEntity;
     }
+    public static ObservationOfAuctionEntity getObservationEntity(){
+        ObservationOfAuctionEntity observationOfAuctionEntity = new ObservationOfAuctionEntity();
+        observationOfAuctionEntity.setAuctionEntity(getAuctionEntityForTests());
+        observationOfAuctionEntity.setUserEntity(getUserEntityForTests());
+        return observationOfAuctionEntity;
+    }
+    public static LicytationEntity getLicytationEntity(){
+        LicytationEntity licytationEntity = new LicytationEntity();
+        UserEntity userEntity = getUserEntityForTests();
+        userEntity.setEmailAddress("licytating@user");
+        licytationEntity.setAuction(getAuctionEntityForTests());
+        licytationEntity.setPrice(350);
+        licytationEntity.setUser(userEntity);
+        return licytationEntity;
+    }
+
+
 }

@@ -36,7 +36,7 @@ public class AddAuctionRequest {
     private List<String> images;
 
     @NotNull
-    @Email
+    @Email(message = "you must enter an email")
     private String emailAddress;
 
 }

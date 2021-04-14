@@ -38,4 +38,5 @@ public class UserEntity {
     @OneToOne
     private AuthorityEntity authorityEntity;
 
+
 }

@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 
 @Data
 public class RegisterUserRequest {
-    @Email
+    @Email(message = "you must put an email address")
     private String emailAddress;
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,20}$", message = "password must contain at least one digit, one lowercase character, one uppercase character and must has 6-20 characters")
     private String password;

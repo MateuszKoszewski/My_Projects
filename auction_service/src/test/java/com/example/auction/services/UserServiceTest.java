@@ -11,6 +11,7 @@ import com.example.auction.model.exceptions.AppErrorMessage;
 import com.example.auction.model.exceptions.AppException;
 import com.example.auction.repositories.AuthoritiesRepository;
 import com.example.auction.repositories.UsersRepository;
+import com.example.auction.testUtils.GetEntities;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,6 +21,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -61,7 +63,7 @@ class UserServiceTest {
 
     @Test
     void shouldReturnGetUserResponseIfExists(){
-        UserEntity userEntity = createUserEntityForTests();
+        UserEntity userEntity = GetEntities.getUserEntityForTests();
         Mockito.when(usersRepository.findByEmailAddress("admin@admin")).thenReturn(Optional.of(userEntity));
         GetUserResponse foundedUser = userService.getUser("admin@admin");
         assertEquals(userEntity.getName(), foundedUser.getName());
@@ -96,7 +98,7 @@ class UserServiceTest {
 @Test
     void shouldReturnRegisterUserResponse(){
     ModelMapper mapper = new ModelMapper();
-        UserEntity userEntity = createUserEntityForTests();
+        UserEntity userEntity = GetEntities.getUserEntityForTests();
         AuthorityEntity authorityEntity = new AuthorityEntity();
         authorityEntity.setAuthority("ROLE_USER");
         userEntity.setAuthorityEntity(authorityEntity);
@@ -114,31 +116,10 @@ class UserServiceTest {
     @Test
     void shouldReturnAppExceptionIfUserAlreadyExists(){
         ModelMapper mapper = new ModelMapper();
-        UserEntity userEntity = createUserEntityForTests();
+        UserEntity userEntity = GetEntities.getUserEntityForTests();
         RegisterUserRequest registerUserRequest = mapper.map(userEntity, RegisterUserRequest.class);
         Mockito.when(usersRepository.findByEmailAddress(userEntity.getEmailAddress())).thenReturn(Optional.of(userEntity));
         assertThrows(AppException.class, ()-> userService.registerUser(registerUserRequest), "User with email address " + userEntity.getEmailAddress() + " already exists");
     }
-
-private UserEntity createUserEntityForTests(){
-    UserEntity userEntity = new UserEntity();
-    AuthorityEntity authorityEntity = new AuthorityEntity();
-    authorityEntity.setAuthority("ROLE_USER");
-    AddressEntity addressEntity = new AddressEntity();
-    addressEntity.setPostCode("14-500");
-    addressEntity.setCity("Braniewo");
-    addressEntity.setStreet("Kopernika");
-    addressEntity.setCounty("warminsko-mazurskie");
-    addressEntity.setNumberOfHouse(3);
-    userEntity.setEmailAddress("agnieszka@agnieszka");
-    userEntity.setName("admin");
-    userEntity.setLastName("adminByAdmin");
-    userEntity.setPassword("admin123");
-    userEntity.setAddress(addressEntity);
-    userEntity.setDateOfCreatingUser(LocalDate.now());
-    userEntity.setAuthorityEntity(authorityEntity);
-       return userEntity;
-}
-
 
 }
